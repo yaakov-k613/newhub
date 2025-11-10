@@ -1,35 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- Declares the document type as HTML5 -->
+<html lang="en"> <!-- Sets the language of the page to English -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NewHub.online | Launch, Test & Grow Your Ideas</title>
-  <link rel="icon" href="./img/favicon_io/favicon.ico">
+  <meta charset="UTF-8" /> <!-- Ensures correct character encoding for text -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- Makes layout responsive on mobile -->
+  <title>NewHub.online | Launch, Test & Grow Your Ideas</title> <!-- Title shown in browser tab -->
+  <link rel="icon" href="./img/favicon_io/favicon.ico"> <!-- Site favicon (tab icon) -->
 
-  <!-- Basic SEO -->
+  <!-- 🔍 Basic SEO metadata -->
   <meta name="description" content="Launch your ideas at NewHub.online — the digital hub where creators, startups, and innovators build, test, and grow projects into full websites.">
   <meta name="keywords" content="idea launch platform, startup incubator online, create and host ideas, project testing site, build and grow projects, digital launchpad, innovation hub, website prototypes, early stage projects, creator platform, entrepreneur tools, host new ideas, NewHub online platform">
 
-  <!-- Open Graph -->
+  <!-- 🌐 Open Graph for social sharing -->
   <meta property="og:title" content="NewHub.online | Launch, Test & Grow Your Ideas">
   <meta property="og:description" content="Where ideas begin — build, test, and grow your projects on NewHub.online.">
-  <meta property="og:image" content="https://newhub.online/img/openGraph_NewHub.png">
-  <meta property="og:url" content="https://newhub.online">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="NewHub.online">
+  <meta property="og:image" content="https://newhub.online/img/openGraph_NewHub.png"> <!-- Image shown in social previews -->
+  <meta property="og:url" content="https://newhub.online"> <!-- Canonical site URL -->
+  <meta property="og:type" content="website"> <!-- Content type -->
+  <meta property="og:site_name" content="NewHub.online"> <!-- Website name -->
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
+  <!-- 🐦 Twitter Card metadata -->
+  <meta name="twitter:card" content="summary_large_image"> <!-- Large preview style -->
   <meta name="twitter:title" content="NewHub.online | Launch, Test & Grow Your Ideas">
   <meta name="twitter:description" content="Where ideas begin — build, test, and grow your projects on NewHub.online.">
-  <meta name="twitter:image" content="https://newhub.online/img/openGraph_NewHub.png">
+  <meta name="twitter:image" content="https://newhub.online/img/openGraph_NewHub.png"> <!-- Image shown when shared on Twitter -->
 
+  <!-- 🎨 Link to external CSS file -->
   <link rel="stylesheet" href="./css/style_newhub.css" />
 </head>
+
 <body>
+  <!-- 🧭 Site header section -->
   <header class="site-header">
-    <a href="https://newhub.online" class="logo">💡NewHub.online</a>
-    <nav class="nav-links">
+    <a href="https://newhub.online" class="logo">💡NewHub.online</a> <!-- Clickable logo linking to homepage -->
+    <nav class="nav-links"> <!-- Main navigation bar -->
       <a href="#hero">Home</a>
       <a href="#categories">Categories</a>
       <a href="#footer">Contact</a>
@@ -37,16 +40,19 @@
   </header>
 
   <main>
+    <!-- 🌟 Hero section (main intro area) -->
     <section id="hero" class="hero">
-      <h1>One Hub. Many Ideas.</h1>
-      <p>Launch your ideas at NewHub.online – the digital hub for innovators!</p>
-      <button id="exploreBtn" class="btn-primary">Explore Ideas ↓</button>
+      <h1>One Hub. Many Ideas.</h1> <!-- Main site heading -->
+      <p>Launch your ideas at NewHub.online – the digital hub for innovators!</p> <!-- Tagline -->
+      <button id="exploreBtn" class="btn-primary">Explore Ideas ↓</button> <!-- Scroll or navigation button -->
     </section>
 
+    <!-- 🗂️ Categories section showing project groups -->
     <section id="categories" class="categories">
-      <h2>Browse by Category</h2>
-      <div class="category-grid">
+      <h2>Browse by Category</h2> <!-- Section heading -->
+      <div class="category-grid"> <!-- Grid container for all category cards -->
 
+        <!-- ✡️ Jewish category -->
         <article id="jewish" class="category-card cat-jewish">
           <h3>✡️ Jewish</h3>
           <p>Torah-centered and faith-driven initiatives.</p>
@@ -55,51 +61,58 @@
               <strong>📜 Torah</strong>
               <ul class="sub-list">
                 <li>
-                  <a href="./sites/torah_mini_yeshiva/index_mini_yeshiva.html">Mini_Yeshiva</a>
+                  <a href="./sites/torah_mini_yeshiva/index_mini_yeshiva.html">Mini_Yeshiva</a> <!-- Link to Mini Yeshiva project -->
                 </li>
               </ul>
             </li>
           </ul>
         </article>
 
+        <!-- ⚙️ Productivity category -->
         <article id="productivity" class="category-card cat-productivity">
           <h3>⚙️ Productivity</h3>
           <p>Systems and tools for focus, structure, and daily performance.</p>
-          <ul class="sub-list"></ul>
+          <ul class="sub-list"></ul> <!-- Placeholder for future project links -->
         </article>
 
+        <!-- 🎓 Education category -->
         <article id="education" class="category-card cat-education">
           <h3>🎓 Education</h3>
           <p>Learning systems, language projects, and self-study programs.</p>
           <ul class="sub-list"></ul>
         </article>
 
+        <!-- 💰 Finance category -->
         <article id="finance" class="category-card cat-finance">
           <h3>💰 Finance &amp; Money</h3>
           <p>Money management, investing, and business-building ideas.</p>
           <ul class="sub-list"></ul>
         </article>
 
+        <!-- 🧪 Experimental category -->
         <article id="experimental" class="category-card cat-experimental">
           <h3>🧪 Experimental</h3>
           <p>Prototype concepts, test apps, and innovation playgrounds.</p>
           <ul class="sub-list"></ul>
         </article>
 
+        <!-- 🌀 Miscellaneous category -->
         <article id="misc" class="category-card cat-misc">
           <h3>🌀 Miscellaneous</h3>
           <p>Creative or personal projects that don’t fit elsewhere.</p>
           <ul class="sub-list"></ul>
         </article>
 
-      </div>
+      </div> <!-- End of category grid -->
     </section>
   </main>
 
+  <!-- ⚓ Footer section -->
   <footer id="footer" class="site-footer">
-    <p>© 2025 NewHub.online • <a href="mailto:info@newhub.online">info@newhub.online</a></p>
+    <p>© 2025 NewHub.online • <a href="mailto:info@newhub.online">info@newhub.online</a></p> <!-- Copyright -->
   </footer>
 
-  <script src="./js/script_newhub.js" defer></script>
+  <!-- 🧩 JavaScript file for page interactivity -->
+  <script src="./js/script_newhub.js" defer></script> <!-- defer = runs after HTML loads -->
 </body>
 </html>
