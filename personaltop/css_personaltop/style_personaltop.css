@@ -1,25 +1,12 @@
-.top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1e293b;
-  color: white;
-  padding: 10px 20px;
+.top-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
 }
-.top-header h1 { font-size: 1.4rem; }
-nav button {
-  background: #38bdf8;
-  border: none;
-  padding: 8px 15px;
-  color: white;
-  border-radius: 5px;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-nav button:hover { background: #0284c7; }
-#embedContainer iframe {
-  width: 100%;
-  height: calc(100vh - 70px);
-  border: none;
+.left-panel, .right-panel {
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 15px;
+  border-radius: 8px;
 }

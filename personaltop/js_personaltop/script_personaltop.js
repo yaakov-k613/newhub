@@ -1,5 +1,6 @@
-document.getElementById("odinBtn").onclick = () =>
-  document.getElementById("embeddedPage").src = "https://www.theodinproject.com";
+document.getElementById("openOdin").onclick = () =>
+  window.open("https://www.theodinproject.com", "_blank");
 
-document.getElementById("workflowyBtn").onclick = () =>
-  document.getElementById("embeddedPage").src = "https://workflowy.com";
+document.getElementById("openWorkflowy").onclick = () =>
+  window.open("https://workflowy.com", "_blank");
+
