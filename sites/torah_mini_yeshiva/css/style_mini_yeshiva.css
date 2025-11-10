@@ -4,17 +4,19 @@
   box-sizing: border-box;
 }
 
+/* MINI YESHIVA THEME */
 :root {
-  --bg: #0b1020;
-  --bg-card: #11172b;
-  --accent: #3fa9f5;
-  --accent-soft: rgba(63, 169, 245, 0.15);
-  --text: #f5f7ff;
-  --text-soft: #a5b0c8;
-  --border: #202742;
+  --bg: #0b1120;               /* Midnight Navy */
+  --bg-card: #111827;          /* Slightly lighter navy */
+  --accent: #0ea5e9;           /* Electric Teal */
+  --accent-soft: rgba(14, 165, 233, 0.18);
+  --accent-gold: #facc15;      /* Gold Radiance */
+  --text: #e5e7eb;             /* Light gray */
+  --text-soft: #9ca3af;        /* Muted gray */
+  --border: #1f2937;           /* Deep border */
   --error: #ff6b6b;
   --radius-lg: 16px;
-  --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
   --transition-fast: 0.2s ease;
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -25,7 +27,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: radial-gradient(circle at top, #202a45 0, #050814 50%, #000 100%);
+  background: radial-gradient(circle at top, #1e3a8a 0, #0b1120 45%, #000 100%);
   color: var(--text);
   font-family: var(--font-sans);
 }
@@ -78,7 +80,7 @@ body {
 /* Cards */
 
 .card {
-  background: linear-gradient(135deg, #11172b, #090d1a);
+  background: linear-gradient(135deg, #111827, #020617);
   border-radius: var(--radius-lg);
   padding: 18px 18px 20px;
   border: 1px solid var(--border);
@@ -88,24 +90,24 @@ body {
 .card h2 {
   margin: 0 0 12px;
   font-size: 1.1rem;
+  color: var(--accent-gold);
 }
 
-/* URL actions (Add / Remove) */
+/* Course summary */
 
-.url-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 6px;
-}
-
-.url-actions button {
-  flex: 1;           /* make Add + Remove equal width */
-  margin-top: 0;     /* avoid extra top gap inside the row */
+.course-summary {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px dashed var(--border);
+  font-size: 0.9rem;
+  color: var(--text-soft);
 }
 
 /* Form */
 
-#video-form {
+#course-form {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -119,30 +121,41 @@ label {
   color: var(--text-soft);
 }
 
-input[type="url"],
-input[type="text"] {
+label small {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+input[type="text"],
+textarea {
   padding: 9px 11px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background-color: rgba(10, 14, 30, 0.95);
+  background-color: rgba(15, 23, 42, 0.96);
   color: var(--text);
   font-size: 0.93rem;
   outline: none;
-  transition: border-color var(--transition-fast),
+  transition:
+    border-color var(--transition-fast),
     box-shadow var(--transition-fast),
     background-color var(--transition-fast);
 }
 
-input[type="url"]::placeholder,
-input[type="text"]::placeholder {
-  color: #58607a;
+textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
-input[type="url"]:focus,
-input[type="text"]:focus {
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+}
+
+input:focus,
+textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 1px var(--accent-soft);
-  background-color: rgba(16, 22, 44, 0.98);
+  background-color: rgba(15, 23, 42, 0.98);
 }
 
 /* Buttons */
@@ -153,13 +166,14 @@ button {
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--accent), #6ed0ff);
-  color: #020308;
+  background: linear-gradient(135deg, var(--accent), #1e3a8a);
+  color: #020617;
   font-weight: 600;
   font-size: 0.98rem;
   letter-spacing: 0.01em;
-  box-shadow: 0 10px 25px rgba(63, 169, 245, 0.45);
-  transition: transform var(--transition-fast),
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.45);
+  transition:
+    transform var(--transition-fast),
     box-shadow var(--transition-fast),
     filter var(--transition-fast);
 }
@@ -167,40 +181,13 @@ button {
 button:hover {
   transform: translateY(-1px);
   filter: brightness(1.05);
-  box-shadow: 0 14px 35px rgba(63, 169, 245, 0.6);
+  box-shadow: 0 14px 35px rgba(14, 165, 233, 0.6);
 }
 
 button:active {
   transform: translateY(0);
-  box-shadow: 0 8px 18px rgba(63, 169, 245, 0.4);
+  box-shadow: 0 8px 18px rgba(14, 165, 233, 0.4);
 }
-/* 
-#generate-btn {
-  background: linear-gradient(135deg, #3fa9f5, #6ed0ff);
-}
-
-#save-url-btn {
-  background: linear-gradient(135deg, #4caf50, #81c784);
-}
-
-#clear-url-btn {
-  background: linear-gradient(135deg, #f44336, #e57373);
-} */
-
-#save-url-btn,
-#clear-url-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text-soft);
-  box-shadow: none;
-}
-#save-url-btn:hover,
-#clear-url-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-
 
 /* Status message */
 
@@ -224,52 +211,40 @@ button:active {
   border: 1px solid var(--border);
   background: radial-gradient(
     circle at top left,
-    #151c33 0,
-    #060812 40%,
-    #05060e 100%
+    #1e3a8a 0,
+    #0b1120 45%,
+    #020617 100%
   );
 }
 
-/* .segments-table {
+.segments-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.87rem;
-} */
-
-/* .segment-check {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--accent);
-  cursor: pointer;
 }
-
-.segment-check:checked ~ td {
-  opacity: 0.6;
-} */
 
 .segment-check {
   width: 18px;
   height: 18px;
   accent-color: var(--accent);
   cursor: pointer;
-} 
+}
 
 .segment-check:checked ~ td {
   opacity: 0.6;
 }
 
-
 .segments-table thead {
   position: sticky;
   top: 0;
-  background: rgba(6, 8, 18, 0.97);
+  background: rgba(10, 16, 32, 0.97);
   backdrop-filter: blur(10px);
 }
 
 .segments-table th,
 .segments-table td {
   padding: 7px 10px;
-  border-bottom: 1px solid #171c32;
+  border-bottom: 1px solid #111827;
   text-align: left;
 }
 
@@ -316,8 +291,8 @@ button:active {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: rgb(2, 4, 12);
-  color: #f5f7ff;
+  background: rgba(2, 6, 23, 0.96);
+  color: var(--text);
   padding: 16px;
   border-radius: 12px;
 }
