@@ -6,12 +6,15 @@ let miniLessons = [];
 let isPlayingLesson = false;
 let currentLessonIndex = null;
 let currentLessonSegmentIndex = 0;
+let currentTotalSeconds = 0;
 
 const STORAGE_KEYS = {
   videos: "my_videos_text",
   duration: "my_segment_duration",
   segments: "my_segments_html",
-  completed: "my_segments_completed"
+  completed: "my_segments_completed",
+  lessons: "my_mini_lessons",
+  totalSeconds: "my_total_seconds"
 };
 
 // YouTube IFrame API callback
@@ -35,7 +38,6 @@ function onPlayerStateChange(event) {
 
   if (event.data === YT.PlayerState.ENDED) {
     if (isPlayingLesson) {
-      // Move to next segment within the same mini-shiur
       currentLessonSegmentIndex++;
       playCurrentLessonSegment();
     } else {
@@ -218,10 +220,11 @@ function restoreCompletionState(tbody) {
   });
 }
 
-// Build mini-shiur segments across multiple videos
+// Build mini-shiur segments across multiple videos (one row per lesson)
 function buildCourseSegments(videos, lessonLenSec, tbody) {
   const total = videos.reduce((s, v) => s + v.duration, 0);
-  miniLessons = []; // reset in-memory lessons
+  miniLessons = [];
+  currentTotalSeconds = total;
 
   let pos = 0;
   let lessonIndex = 1;
@@ -230,7 +233,6 @@ function buildCourseSegments(videos, lessonLenSec, tbody) {
     const lessonStartGlobal = pos;
     const remainingTotal = total - pos;
     let remaining = Math.min(lessonLenSec, remainingTotal);
-
     const lessonSegments = [];
 
     while (remaining > 0 && pos < total) {
@@ -238,8 +240,8 @@ function buildCourseSegments(videos, lessonLenSec, tbody) {
       for (let i = 0; i < videos.length; i++) {
         const v = videos[i];
         if (pos < acc + v.duration) {
-          const offset = pos - acc;            // seconds into this video
-          const avail = v.duration - offset;   // how much left in this video
+          const offset = pos - acc;
+          const avail = v.duration - offset;
           const use = Math.min(avail, remaining);
 
           lessonSegments.push({
@@ -269,7 +271,6 @@ function buildCourseSegments(videos, lessonLenSec, tbody) {
     lessonIndex++;
   }
 
-  // Render table rows: ONE ROW PER MINI-SHIUR
   const rows = [];
   let rowIndex = 1;
 
@@ -313,7 +314,6 @@ function playCurrentLessonSegment() {
   }
 
   if (currentLessonSegmentIndex >= lesson.segments.length) {
-    // Finished all segments in this mini-shiur
     isPlayingLesson = false;
     if (overlay) overlay.style.display = "flex";
     return;
@@ -343,11 +343,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const durationInput = document.getElementById("segment-duration");
   const overlay = document.getElementById("player-overlay");
   const totalDurationEl = document.getElementById("total-duration");
+  const saveCourseBtn = document.getElementById("save-course-btn");
+  const clearCourseBtn = document.getElementById("clear-course-btn");
 
   // Restore saved inputs and segments
   const savedVideos = localStorage.getItem(STORAGE_KEYS.videos);
   const savedDuration = localStorage.getItem(STORAGE_KEYS.duration);
   const savedSegments = localStorage.getItem(STORAGE_KEYS.segments);
+  const savedLessons = localStorage.getItem(STORAGE_KEYS.lessons);
+  const savedTotalSeconds = localStorage.getItem(STORAGE_KEYS.totalSeconds);
 
   if (savedVideos) {
     videosInput.value = savedVideos;
@@ -356,12 +360,66 @@ document.addEventListener("DOMContentLoaded", () => {
     durationInput.value = savedDuration;
   }
 
-  if (savedSegments) {
+  if (savedSegments && savedLessons) {
+    segmentsBody.innerHTML = savedSegments;
+    try {
+      miniLessons = JSON.parse(savedLessons) || [];
+    } catch {
+      miniLessons = [];
+    }
+    restoreCompletionState(segmentsBody);
+
+    if (savedTotalSeconds && totalDurationEl) {
+      const t = Number(savedTotalSeconds);
+      currentTotalSeconds = t;
+      totalDurationEl.textContent =
+        `Total course duration: ${formatSeconds(t)} (${(t / 3600).toFixed(2)} hours) • Mini-shiurim: ${miniLessons.length}`;
+    }
+  } else if (savedSegments && !savedLessons) {
+    // Old saved data before lessons were stored
     segmentsBody.innerHTML = savedSegments;
     restoreCompletionState(segmentsBody);
+    clearStatus();
+    setStatus('Please click "Build Mini-Shiurim" and then "Add" to resave.', false);
   } else {
     clearSegments(segmentsBody);
   }
+
+  // Add / Remove buttons
+  saveCourseBtn.addEventListener("click", () => {
+    if (!miniLessons.length) {
+      setStatus('First click "Build Mini-Shiurim", then Add.', true);
+      return;
+    }
+    localStorage.setItem(STORAGE_KEYS.videos, videosInput.value);
+    localStorage.setItem(STORAGE_KEYS.duration, durationInput.value.trim());
+    localStorage.setItem(STORAGE_KEYS.segments, segmentsBody.innerHTML);
+    localStorage.setItem(STORAGE_KEYS.lessons, JSON.stringify(miniLessons));
+    localStorage.setItem(STORAGE_KEYS.totalSeconds, String(currentTotalSeconds));
+    saveCompletionState(segmentsBody);
+    setStatus("Course and mini-shiurim saved for next time.");
+  });
+
+  clearCourseBtn.addEventListener("click", () => {
+    localStorage.removeItem(STORAGE_KEYS.videos);
+    localStorage.removeItem(STORAGE_KEYS.duration);
+    localStorage.removeItem(STORAGE_KEYS.segments);
+    localStorage.removeItem(STORAGE_KEYS.completed);
+    localStorage.removeItem(STORAGE_KEYS.lessons);
+    localStorage.removeItem(STORAGE_KEYS.totalSeconds);
+
+    miniLessons = [];
+    currentTotalSeconds = 0;
+    videosInput.value = "";
+    durationInput.value = "";
+    clearSegments(segmentsBody);
+
+    if (totalDurationEl) {
+      totalDurationEl.textContent = "Total course duration: –";
+    }
+    if (overlay) overlay.style.display = "none";
+    setStatus("Saved course cleared.");
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -396,7 +454,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Build video list (URLs + IDs)
     const videos = [];
     for (const line of lines) {
       const videoId = extractVideoId(line);
@@ -409,7 +466,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setStatus("Loading videos and calculating durations…");
 
-    // Get durations sequentially
     try {
       for (let i = 0; i < videos.length; i++) {
         const v = videos[i];
@@ -428,15 +484,17 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (totalDurationEl) {
-      totalDurationEl.textContent = `Total course duration: ${formatSeconds(
-        totalSeconds
-      )} (${(totalSeconds / 3600).toFixed(2)} hours) • Mini-shiurim: ${lessonCount}`;
+      totalDurationEl.textContent =
+        `Total course duration: ${formatSeconds(
+          totalSeconds
+        )} (${(totalSeconds / 3600).toFixed(2)} hours) • Mini-shiurim: ${lessonCount}`;
     }
 
-    // Persist latest state
     localStorage.setItem(STORAGE_KEYS.videos, videosInput.value);
     localStorage.setItem(STORAGE_KEYS.duration, durationInput.value.trim());
     localStorage.setItem(STORAGE_KEYS.segments, segmentsBody.innerHTML);
+    localStorage.setItem(STORAGE_KEYS.lessons, JSON.stringify(miniLessons));
+    localStorage.setItem(STORAGE_KEYS.totalSeconds, String(currentTotalSeconds));
     saveCompletionState(segmentsBody);
 
     setStatus(
@@ -449,15 +507,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const link = e.target.closest(".segment-link");
     if (!link) return;
 
-    // Allow ctrl/cmd-click to open in new tab using plain URL
-    if (e.metaKey || e.ctrlKey) return;
+    if (e.metaKey || e.ctrlKey) return; // allow open in new tab
 
     e.preventDefault();
 
     const lessonIdx = Number(link.dataset.lesson);
     const lesson = miniLessons[lessonIdx];
     if (!lesson) {
-      setStatus("Please rebuild the course to play this mini-shiur.", true);
+      setStatus('Please click "Build Mini-Shiurim" and then "Add" again.', true);
       return;
     }
 
