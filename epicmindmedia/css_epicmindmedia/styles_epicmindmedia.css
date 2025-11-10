@@ -1,0 +1,220 @@
+:root {
+  --ink: #060b30;
+  --accent: #ffa500;
+  --white: #ffffff;
+  --plum: #483033;
+  --blue: #0074e4;
+
+  /* Control hero video position */
+  --hero-focal-x: 50%;
+  --hero-focal-y: 70%; /* lower = show more top (try 65–80%) */
+}
+
+/* ======== Reset ======== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ======== Header ======== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
+}
+
+.header.is-scrolled {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.header.is-scrolled .nav__list a { color: #ffffff; }
+.header.is-scrolled .btn--accent { background: var(--accent); color: var(--ink); }
+.header.is-scrolled .nav-toggle__bar { background: #ffffff; }
+.header.is-scrolled .logo img { opacity: 1; }
+
+/* ======== Header Layout ======== */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.logo img {
+  height: 100px;
+  width: auto;
+  border-radius: 50%;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ======== Navigation ======== */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav__list a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.header:not(.is-scrolled) .nav__list a { color: #ffffff; }
+.nav__list a:hover, .nav__list a:focus { color: var(--accent); }
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 0.65rem;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.btn--accent:hover { filter: brightness(0.95); }
+
+/* ======== Mobile Nav ======== */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  width: 24px;
+  height: 3px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+
+.header:not(.is-scrolled) .nav-toggle__bar { background: #ffffff; }
+
+@media (max-width: 992px) {
+  .nav-toggle { display: flex; }
+
+  .nav {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(80vw, 340px);
+    background: var(--white);
+    box-shadow: -12px 0 24px rgba(0, 0, 0, 0.08);
+    padding: 6.5rem 1.25rem 1.25rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav.nav--open { transform: translateX(0); }
+  .nav__list { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .nav__actions { flex-direction: column; align-items: stretch; }
+}
+
+/* ======== HERO SECTION ======== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ======== HERO VIDEO ======== */
+.hero__video-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -2;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--hero-focal-x) var(--hero-focal-y);
+}
+
+@media (max-aspect-ratio: 9/16) {
+  :root { --hero-focal-y: 80%; } /* lower focal point for tall screens */
+}
+
+/* ======== CONTENT ======== */
+.hero__content {
+  position: relative;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 18vh 1rem 16vh;
+  max-width: 900px;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.05;
+}
+
+.hero p {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  opacity: 0.95;
+  max-width: 60ch;
+}
+
+/* ======== ACCESSIBILITY ======== */
+@media (prefers-reduced-motion: reduce) {
+  .hero__video { display: none; }
+}
