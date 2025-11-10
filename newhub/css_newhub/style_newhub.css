@@ -183,6 +183,14 @@ a {
   background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.2), transparent 55%);
 }
 
+.cat-media {
+  border-color: rgba(245, 158, 11, 0.85); /* warm golden accent */
+}
+.cat-media::after {
+  background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.25), transparent 55%);
+}
+
+
 .cat-finance {
   border-color: rgba(34, 197, 94, 0.8);
 }
