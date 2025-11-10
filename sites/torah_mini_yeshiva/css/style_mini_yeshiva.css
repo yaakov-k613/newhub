@@ -291,7 +291,7 @@ button:active {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: rgba(2, 6, 23, 0.96);
+  background: rgb(0, 0, 0);
   color: var(--text);
   padding: 16px;
   border-radius: 12px;
