@@ -11,18 +11,18 @@
 
   <div class="app">
     <header class="app__header">
-      <h1>Mini Yeshiva – Multi-Video Course Builder</h1>
-      <p>Enter YouTube links in order; we’ll calculate the course and slice it into mini-shiurim.</p>
+      <h1>Mini Yeshiva – Multi-Video Shiurim Builder</h1>
+      <p>Enter YouTube links in order; we’ll calculate the shiur and slice it into mini-shiurim.</p>
     </header>
 
     <main class="app__main">
       <!-- Course Input Section -->
       <section class="card">
-        <h2>Course Settings</h2>
+        <h2>Shiur Settings</h2>
 
         <form id="course-form">
           <label for="videos-input">
-            Course Videos
+            Shiurim Videos
             <small>(one YouTube URL per line, in order)</small>
             <textarea
               id="videos-input"
@@ -48,7 +48,7 @@ https://youtu.be/BBBBBB"
         </form>
 
         <div class="course-summary">
-          <p id="total-duration">Total course duration: –</p>
+          <p id="total-duration">Total shiur duration: –</p>
         </div>
       </section>
 
@@ -79,7 +79,7 @@ https://youtu.be/BBBBBB"
             <tbody id="segments-body">
               <tr>
                 <td colspan="5" class="segments-empty">
-                  No mini-shiurim yet. Enter course videos and a duration, then click “Build Mini-Shiurim”.
+                  No mini-shiurim yet. Enter shiur videos, then click “Build Mini-Shiurim”.
                 </td>
               </tr>
             </tbody>
