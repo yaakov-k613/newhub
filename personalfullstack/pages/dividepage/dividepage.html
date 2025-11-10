@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="../../../miniyeshiva/img_miniyeshiva/favicon_io_v2/favicon.ico">
+  <title>Mini Yeshiva – Multi-Video Course Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style_dividepage.css">
+</head>
+<body>
+
+  <div class="app">
+    <header class="app__header">
+      <a href="../../index.html">Home</a>
+      <h1>Mini Yeshiva – Multi-Video Shiurim Builder</h1>
+      <p>Enter YouTube links in order; we’ll calculate the shiur and slice it into mini-shiurim.</p>
+    </header>
+
+    <main class="app__main">
+      <!-- Course Input Section -->
+      <section class="card">
+        <h2>Shiur Settings</h2>
+
+        <form id="course-form">
+          <label for="videos-input">
+            Shiurim Videos
+            <small>(one YouTube URL per line, in order)</small>
+            <textarea
+              id="videos-input"
+              rows="6"
+              placeholder="https://youtu.be/AAAAAA
+https://youtu.be/BBBBBB"
+              required
+            ></textarea>
+          </label>
+
+          <label for="segment-duration">
+            Mini-shiur duration (HH:MM:SS)
+            <input
+              type="text"
+              id="segment-duration"
+              placeholder="01:00:00"
+              required
+            />
+          </label>
+
+          <button type="submit" id="build-btn">Build Mini-Shiurim</button>
+          <p id="status-message" class="status-message" aria-live="polite"></p>
+        </form>
+
+        <div class="course-summary">
+    <p id="total-duration">Total shiur duration: –</p>
+
+      <div class="url-actions">
+        <button type="button" id="save-course-btn">Add</button>
+        <button type="button" id="clear-course-btn">Remove</button>
+      </div>
+    </div>
+    
+      <section class="card">
+        <h2>Video Preview</h2>
+        <div class="player-wrapper">
+          <div id="player"></div>
+          <div id="player-overlay">
+            <p>Mini-shiur complete.</p>
+            <p>&nbsp;Click a segment below to continue.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Mini-Shiurim</h2>
+        <div class="segments-table-container">
+          <table class="segments-table">
+            <thead>
+              <tr>
+                <th>✔</th>
+                <th>#</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody id="segments-body">
+              <tr>
+                <td colspan="5" class="segments-empty">
+                  No mini-shiurim yet. Enter shiur videos, then click “Build Mini-Shiurim”.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./script_dividepage.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
