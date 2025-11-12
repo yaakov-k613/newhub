@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper scaling on mobile devices -->
   <title>Epic Mind Media — Human‑Centered Creative Studio</title> <!-- Descriptive, keyword-rich page title for SERPs -->
   <meta name="description" content="Epic Mind Media crafts human-centered branding, social kits, short-form video, and fast, accessible web pages that connect with real people."> <!-- Concise SEO description -->
-  <link rel="icon" href="./assets/favicon.ico"> <!-- Favicon for brand recognition in the browser tab -->
-  <link rel="preload" href="./assets/emm_intro.mp4" as="video" type="video/mp4"> <!-- Preload hero video for smoother first paint -->
-  <link rel="stylesheet" href="./css_epicmindmedia/epicmindmedia_styles_full.css"> <!-- Link external stylesheet (colors and layout) -->
+  <link rel="icon" href="./img_epicmindmedia/favicon.ico"> <!-- Favicon for brand recognition in the browser tab -->
+  <link rel="preload" href="./vids_epicmindmedia/emm_intro.mp4" as="video" type="video/mp4"> <!-- Preload hero video for smoother first paint -->
+  <link rel="stylesheet" href="./css_epicmindmedia/epicmindmedia_v1.css"> <!-- Link external stylesheet (colors and layout) -->
 </head> <!-- End head -->
 <body id="top"> <!-- Begin visible document body with a top anchor for skip/back-to-top links -->
 
@@ -37,8 +37,8 @@
 
   <section class="hero" aria-label="Brand hero"> <!-- Visually immersive hero area with video background -->
     <div class="hero__media" aria-hidden="true"> <!-- Wrapper for decorative media, hidden from assistive tech -->
-      <video class="hero__video" autoplay muted playsinline loop poster="./assets/logo_emm.png"> <!-- Autoplay muted per policy; poster provides fallback image -->
-        <source src="./assets/emm_intro.mp4" type="video/mp4"> <!-- MP4 source for broad browser support -->
+      <video class="hero__video" autoplay muted playsinline loop poster="./img_epicmindmedia/logo_emm.png"> <!-- Autoplay muted per policy; poster provides fallback image -->
+        <source src="./vids_epicmindmedia/emm_intro.mp4" type="video/mp4"> <!-- MP4 source for broad browser support -->
         <!-- If the browser cannot play the video, the section’s overlay + text still conveys meaning --> <!-- Accessibility note -->
       </video> <!-- End video -->
       <div class="hero__overlay"></div> <!-- Gradient overlay to ensure text contrast over video -->
@@ -149,6 +149,6 @@
     </div> <!-- End footer row -->
   </footer> <!-- End contentinfo -->
 
-  <script src="./js_epicmindmedia/epicmindmedia_frontend_js.js" defer></script> <!-- Defer main JavaScript for interactivity and Firebase -->
+  <script src="./js_epicmindmedia/epicmindmedia_v1.js" defer></script> <!-- Defer main JavaScript for interactivity and Firebase -->
 </body> <!-- End body -->
 </html> <!-- End HTML document -->
