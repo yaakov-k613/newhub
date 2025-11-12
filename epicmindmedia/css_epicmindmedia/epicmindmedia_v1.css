@@ -96,9 +96,11 @@ body{
   .nav-toggle{display:none}
   .nav{position:static;transform:none;width:auto;background:transparent;padding:0;box-shadow:none}
 
-  /* PRE-SCROLL: true 12px gaps, natural widths (no internal empty space) */
+  /* PRE-SCROLL: true 24px gaps, natural widths (no internal empty space) */
   .nav__list{
-    display:flex;align-items:center;gap:24px; /* exact 12px before scroll */
+    display:flex;
+    align-items:center;
+    gap:24px; /* exact 24px before scroll */
     transition:gap .25s ease;
   }
 
@@ -125,7 +127,17 @@ body{
 /* ---------- Buttons ---------- */
 .btn{display:inline-block;padding:.7rem 1rem;border-radius:calc(var(--radius) - 6px);font-weight:700;letter-spacing:.2px;transition:transform var(--speed),background var(--speed),box-shadow var(--speed)}
 .btn--accent{background:var(--accent);color:var(--ink)}
-.btn--accent:hover{filter:brightness(.9)}
+
+
+/* Fix: ensure Get a Quote hover text color overrides everything */
+.btn--accent:hover {
+  background: var(--accent) !important;    /* orange background */
+  color: var(--ink) !important;            /* dark navy text */
+  filter: brightness(0.95);                /* subtle darken */
+}
+
+
+
 .btn--light{background:#eaf0ff;color:#0b1030}
 .btn--light:hover{background:#f4f7ff}
 
