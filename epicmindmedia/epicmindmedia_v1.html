@@ -35,20 +35,24 @@
     </div> <!-- End header row -->
   </header> <!-- End banner -->
 
+
+
   <section class="hero" aria-label="Brand hero"> <!-- Visually immersive hero area with video background -->
-    <div class="hero__media" aria-hidden="true"> <!-- Wrapper for decorative media, hidden from assistive tech -->
-      <video class="hero__video" autoplay muted playsinline loop poster="./img_epicmindmedia/logo_emm.png"> <!-- Autoplay muted per policy; poster provides fallback image -->
-        <source src="./vids_epicmindmedia/emm_intro.mp4" type="video/mp4"> <!-- MP4 source for broad browser support -->
-        <!-- If the browser cannot play the video, the section’s overlay + text still conveys meaning --> <!-- Accessibility note -->
-      </video> <!-- End video -->
-      <div class="hero__overlay"></div> <!-- Gradient overlay to ensure text contrast over video -->
-    </div> <!-- End media wrapper -->
-    <div class="container hero__content"> <!-- Centered content block for messaging/CTA -->
-      <h1>Creativity that feels human.</h1> <!-- Primary message with human-centered emphasis -->
-      <p>We blend story and strategy to create brand kits, social media systems, and short‑form video that connect clearly and sincerely.</p> <!-- Value proposition supporting the H1 -->
-      <a class="btn btn--light" href="#portfolio">See Work</a> <!-- CTA to jump to showcased work -->
-    </div> <!-- End hero content -->
-  </section> <!-- End hero -->
+  <div class="hero__media" aria-hidden="true"> <!-- Wrapper for decorative media, hidden from assistive tech -->
+    <video class="hero__video" autoplay muted playsinline poster="./img_epicmindmedia/logo_emm.png">
+      <source src="./vids_epicmindmedia/emm_intro.mp4" type="video/mp4">
+      <!-- Accessibility fallback -->
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero__overlay"></div> <!-- Gradient overlay to ensure text contrast -->
+  </div> <!-- End media wrapper -->
+
+  <div class="container hero__content"> <!-- Centered content block for messaging/CTA -->
+    <h1>Creativity that feels human.</h1>
+    <p>We blend story and strategy to create brand kits, social media systems, and short-form video that connect clearly and sincerely.</p>
+    <a class="btn btn--light" href="#portfolio">See Work</a>
+  </div> <!-- End hero content -->
+</section> <!-- End hero -->
 
   <main id="main" role="main"> <!-- Main landmark for primary page content -->
     <section id="about" class="section" aria-labelledby="about-title"> <!-- About section describes mission and approach -->
