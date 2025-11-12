@@ -1,7 +1,206 @@
-* Epic Mind Media Colors:
+1. Epic Mind Media Colors:
     Color Codes:
         #060b30 - Blue
         #ffa500 - Orange
         #ffffff - White
         #483033 - Brown
         #0074e4 - Color Palette
+----
+
+2. AI Master Prompt:
+    📢 Epic Mind Media — Project Decomposition Prompts
+ID: 10004
+🧠ChatGPT Understands the Prompt as Follows:
+You want me to now act as the **Project Decomposition Architect (PDA)** and produce an atomic, step-by-step prompt sequence for building the full **Epic Mind Media website** using **HTML, CSS, JS, and Firebase**, incorporating your brand colors and assets.
+
+✒️ChatGPT’s Response:
+
+(Assumption: Epic Mind Media website is a single-page site hosted under `https://newhub.online/epicmindmedia`, featuring brand sections, Firebase quote form, and full mobile responsiveness.)
+
+---
+
+**Prompt 1/10:**
+Define a complete functional specification describing Epic Mind Media’s purpose, audience, structure (hero, about, services, portfolio, quote, contact, footer), and brand tone.
+
+📢 Epic Mind Media — Functional Specification
+ID: 10005
+🧠ChatGPT Understands the Prompt as Follows:
+You want a full **functional specification document** detailing Epic Mind Media’s **purpose, audience, structure, and brand tone**, covering all website sections.
+
+✒️ChatGPT’s Response:
+
+### 🎯 **Purpose**
+
+Epic Mind Media is a **human-centered creative studio** specializing in **branding, storytelling, and digital content** that connects emotionally with audiences. Its site showcases expertise, builds trust, and generates client leads through clear design and authentic communication.
+
+---
+
+### 👥 **Target Audience**
+
+* **Primary:** Small business owners, nonprofits, and startups seeking brand identity, video marketing, or design services.
+* **Secondary:** Marketing professionals or agencies looking for collaboration partners.
+* **Emotional Intent:** Inspire confidence and warmth — a blend of creativity and professionalism that feels personal, not corporate.
+
+---
+
+### 🧱 **Website Structure**
+
+1. **Hero Section**
+
+   * Background: looping intro video (`emm_intro.mp4`)
+   * Tagline: “Creativity that feels human.”
+   * Subtext: Studio mission statement
+   * CTA: “See Work” → scrolls to Portfolio
+
+2. **About Section**
+
+   * Mission: Human-centered design emphasizing clarity, emotion, and connection.
+   * Visuals: Studio imagery or subtle animations.
+
+3. **Services Section**
+
+   * Grid of 4 cards: Brand Kits, Social Media Kits, Short-Form Video, Web Pages.
+   * Each card includes a short, action-driven description.
+
+4. **Portfolio Section**
+
+   * Gallery grid of thumbnails linking to case studies (future-ready).
+
+5. **Quote Section**
+
+   * Form: Name, Email, Service, Message → Firebase Firestore.
+   * Feedback text appears dynamically after submission.
+
+6. **Contact Section**
+
+   * Email link and optional social icons.
+
+7. **Footer**
+
+   * Dynamic year, back-to-top link, and copyright.
+
+---
+
+### 🎨 **Brand Tone**
+
+* **Voice:** Authentic, warm, and intelligent.
+* **Mood:** Confident creativity with emotional resonance.
+* **Palette:** Deep blue `#060b30` background, orange `#ffa500` CTA accents, white text, brown `#483033` detail tones, and blue `#0074e4` for hover/highlight.
+
+Word count: 245 | Date: 2025-11-12
+
+
+**Prompt 2/10:**
+You are a Senior UX/UI Designer. Create wireframes and layout notes for all sections (desktop + mobile) including placement for logo, video hero, CTA buttons, and color palette usage (#060b30, #ffa500, #ffffff, #483033, #0074e4).
+
+📢 Epic Mind Media — UX/UI Wireframes & Layout Notes
+ID: 10006
+🧠ChatGPT Understands the Prompt as Follows:
+You want complete **wireframe descriptions and layout notes** (desktop + mobile) for all website sections, specifying logo/video placement, CTAs, and color palette integration.
+
+✒️ChatGPT’s Response:
+
+### 🖥️ **Desktop Wireframe Overview**
+
+**1. Header (Sticky)**
+
+* **Top Bar:** Left → Logo (64 px round, white border). Right → Nav links (About, Services, Portfolio, Contact, Get a Quote).
+* **BG:** Transparent overlay → solid `#060b30` on scroll.
+* **CTA Button:** “Get a Quote” in **#ffa500** with hover **#0074e4**.
+
+**2. Hero Section**
+
+* Full-screen video (`emm_intro.mp4`) background.
+* Overlay gradient: top transparent → bottom `#060b30`.
+* Centered text block:
+
+  * H1: “Creativity that feels human.” → **#ffffff**
+  * P: one-line mission summary → **#e0e0e0**
+  * Button: “See Work” → **#ffa500** hover → **#0074e4**
+
+**3. About**
+
+* Two-column layout:
+
+  * Left: paragraph text, brown accent divider (`#483033`).
+  * Right: image or subtle animation.
+* Section background: `#060b30`. Text: `#ffffff`.
+
+**4. Services**
+
+* Four equal-width cards in responsive grid.
+* Each card: title (white), body text (muted gray), border hover glow in **#0074e4**.
+* Background: darker blue (`#0a1028`).
+
+**5. Portfolio**
+
+* 3-column grid → auto-wrap to 1 column on mobile.
+* Image thumbnails with overlay captions on hover (orange accent).
+
+**6. Quote Form**
+
+* Centered narrow form (600 px max).
+* Inputs: dark background with orange border-focus.
+* Submit button: **#ffa500**, success message text: **#0074e4**.
+
+**7. Contact**
+
+* Simple text-centered layout, white links, brown underline on hover.
+
+**8. Footer**
+
+* Two-column row:
+
+  * Left → copyright
+  * Right → “Back to top ↑”
+* Background `#0f1636`, small white text.
+
+---
+
+### 📱 **Mobile Adjustments**
+
+* Collapsible hamburger nav overlay (`#060b30`).
+* Hero text and buttons vertically centered, single column.
+* Services and Portfolio stack to 1 column.
+* Padding reduced; buttons full-width.
+
+Word count: 247 | Date: 2025-11-12
+
+
+**Prompt 3/10:**
+You are a Senior Front-End Developer. Write the complete, semantic, and accessible **HTML5** for the entire Epic Mind Media website, using ARIA roles and sectioning elements.
+Mandate: Ensure all code includes detailed, professional explanatory comments.
+
+create epicmindmedia_full.html
+
+
+**Prompt 4/10:**
+Write the complete, responsive **CSS** implementing the official Epic Mind Media color palette and design system (dark blue base, orange accents, white text). Include mobile-first grid layouts and hover animations.
+Mandate: Ensure all code includes detailed, professional explanatory comments.
+
+**Prompt 5/10:**
+You are a JavaScript Developer. Write all **frontend JS** for nav toggling, smooth scrolling, dynamic year, and form feedback animations.
+Mandate: Ensure all code includes detailed, professional explanatory comments.
+
+**Prompt 6/10:**
+You are a Firebase Integration Specialist. Write `firebase-config.js` with placeholder keys, explain where to obtain them, and how to securely include them in production.
+Mandate: Ensure all code includes detailed, professional explanatory comments.
+
+**Prompt 7/10:**
+Implement **Firestore** logic in `app.js` to capture and store quote requests (name, email, service, message) into a `quoteRequests` collection. Include client-side validation and success/failure feedback.
+Mandate: Ensure all code includes detailed, professional explanatory comments.
+
+**Prompt 8/10:**
+Design and write **Firestore Security Rules** that allow only authenticated writes from the website’s frontend and protect all data from public reads.
+Mandate: Ensure all code includes detailed, professional explanatory comments.
+
+**Prompt 9/10:**
+Create a **Firebase Hosting deployment guide**, including initialization, CLI commands, and configuration (e.g., `firebase.json`, `public` folder structure).
+
+**Prompt 10/10:**
+Write a full **testing checklist** covering responsiveness, accessibility (WCAG), Firebase connectivity, form submission verification, and video performance optimization.
+
+---
+
+Word count: 249 | Date: 2025-11-12
+====

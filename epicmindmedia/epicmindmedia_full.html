@@ -1,0 +1,154 @@
+<!DOCTYPE html> <!-- Declare HTML5 doctype for standards-compliant rendering -->
+<html lang="en"> <!-- Set document language to English for accessibility and SEO -->
+<head> <!-- Document head: metadata and resource links -->
+  <meta charset="UTF-8"> <!-- Use UTF-8 character encoding to support all languages -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper scaling on mobile devices -->
+  <title>Epic Mind Media — Human‑Centered Creative Studio</title> <!-- Descriptive, keyword-rich page title for SERPs -->
+  <meta name="description" content="Epic Mind Media crafts human-centered branding, social kits, short-form video, and fast, accessible web pages that connect with real people."> <!-- Concise SEO description -->
+  <link rel="icon" href="./assets/favicon.ico"> <!-- Favicon for brand recognition in the browser tab -->
+  <link rel="preload" href="./assets/emm_intro.mp4" as="video" type="video/mp4"> <!-- Preload hero video for smoother first paint -->
+  <link rel="stylesheet" href="./styles.css"> <!-- Link external stylesheet (colors and layout) -->
+</head> <!-- End head -->
+<body id="top"> <!-- Begin visible document body with a top anchor for skip/back-to-top links -->
+
+  <a class="skip-link" href="#main">Skip to content</a> <!-- Keyboard-accessible skip link for screen readers -->
+
+  <header class="header" role="banner"> <!-- Site-wide banner with brand and primary navigation -->
+    <div class="container header__row"> <!-- Constrain header content and arrange with flex -->
+      <a class="logo" href="./" aria-label="Epic Mind Media Home"> <!-- Clickable logo returns to the home section -->
+        <img src="./assets/logo_emm.png" alt="Epic Mind Media logo"> <!-- Brand logo with descriptive alt text -->
+      </a> <!-- End logo -->
+      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation"> <!-- Mobile hamburger control with ARIA state -->
+        <span class="bar" aria-hidden="true"></span> <!-- Decorative bar for hamburger icon -->
+        <span class="bar" aria-hidden="true"></span> <!-- Decorative bar for hamburger icon -->
+        <span class="bar" aria-hidden="true"></span> <!-- Decorative bar for hamburger icon -->
+      </button> <!-- End mobile toggle -->
+      <nav id="primary-nav" class="nav" aria-label="Primary"> <!-- Primary navigation landmark -->
+        <ul class="nav__list"> <!-- Navigation list for keyboard traversal -->
+          <li><a href="#about">About</a></li> <!-- Link to About section -->
+          <li><a href="#services">Services</a></li> <!-- Link to Services section -->
+          <li><a href="#portfolio">Portfolio</a></li> <!-- Link to Portfolio section -->
+          <li><a href="#contact">Contact</a></li> <!-- Link to Contact section -->
+          <li class="nav__cta"><a class="btn btn--accent" href="#quote">Get a Quote</a></li> <!-- Prominent call-to-action link -->
+        </ul> <!-- End nav list -->
+      </nav> <!-- End primary navigation -->
+    </div> <!-- End header row -->
+  </header> <!-- End banner -->
+
+  <section class="hero" aria-label="Brand hero"> <!-- Visually immersive hero area with video background -->
+    <div class="hero__media" aria-hidden="true"> <!-- Wrapper for decorative media, hidden from assistive tech -->
+      <video class="hero__video" autoplay muted playsinline loop poster="./assets/logo_emm.png"> <!-- Autoplay muted per policy; poster provides fallback image -->
+        <source src="./assets/emm_intro.mp4" type="video/mp4"> <!-- MP4 source for broad browser support -->
+        <!-- If the browser cannot play the video, the section’s overlay + text still conveys meaning --> <!-- Accessibility note -->
+      </video> <!-- End video -->
+      <div class="hero__overlay"></div> <!-- Gradient overlay to ensure text contrast over video -->
+    </div> <!-- End media wrapper -->
+    <div class="container hero__content"> <!-- Centered content block for messaging/CTA -->
+      <h1>Creativity that feels human.</h1> <!-- Primary message with human-centered emphasis -->
+      <p>We blend story and strategy to create brand kits, social media systems, and short‑form video that connect clearly and sincerely.</p> <!-- Value proposition supporting the H1 -->
+      <a class="btn btn--light" href="#portfolio">See Work</a> <!-- CTA to jump to showcased work -->
+    </div> <!-- End hero content -->
+  </section> <!-- End hero -->
+
+  <main id="main" role="main"> <!-- Main landmark for primary page content -->
+    <section id="about" class="section" aria-labelledby="about-title"> <!-- About section describes mission and approach -->
+      <div class="container"> <!-- Constrain width and provide padding -->
+        <h2 id="about-title">About Epic Mind Media</h2> <!-- Section heading tied to aria-labelledby -->
+        <p>We help nonprofits, small businesses, and growing brands turn ideas into clear, beautiful outcomes. Our work aims for clarity, usefulness, and heart—always.</p> <!-- Mission statement reflecting tone -->
+      </div> <!-- End container -->
+    </section> <!-- End About -->
+
+    <section id="services" class="section section--alt" aria-labelledby="services-title"> <!-- Services presented as card grid -->
+      <div class="container"> <!-- Standard content wrapper -->
+        <h2 id="services-title">Services</h2> <!-- Section heading for services -->
+        <ul class="cards" role="list"> <!-- Use role=list to reinforce semantics for some ATs -->
+          <li class="card"> <!-- Single service card -->
+            <h3>Brand Kits</h3> <!-- Service title -->
+            <p>Logos, color systems, and brand guides for consistent, memorable storytelling.</p> <!-- Service description -->
+          </li> <!-- End card -->
+          <li class="card"> <!-- Single service card -->
+            <h3>Social Media Kits</h3> <!-- Service title -->
+            <p>Templates and micro‑content that convert attention into action.</p> <!-- Service description -->
+          </li> <!-- End card -->
+          <li class="card"> <!-- Single service card -->
+            <h3>Short‑Form Video</h3> <!-- Service title -->
+            <p>Hook‑first edits, captions, and motion graphics optimized for mobile feeds.</p> <!-- Service description -->
+          </li> <!-- End card -->
+          <li class="card"> <!-- Single service card -->
+            <h3>Web & Landing Pages</h3> <!-- Service title -->
+            <p>Fast, accessible pages that communicate clearly and capture leads.</p> <!-- Service description -->
+          </li> <!-- End card -->
+        </ul> <!-- End services list -->
+      </div> <!-- End container -->
+    </section> <!-- End Services -->
+
+    <section id="portfolio" class="section" aria-labelledby="portfolio-title"> <!-- Portfolio grid displays selected work -->
+      <div class="container"> <!-- Width constraint for readable line lengths -->
+        <h2 id="portfolio-title">Portfolio</h2> <!-- Section heading -->
+        <div class="grid" role="list"> <!-- Grid acting as visual list of work items -->
+          <figure class="tile" role="listitem"> <!-- Portfolio item wrapper with figure semantics -->
+            <img src="./assets/portfolio_placeholder.jpg" alt="Short-form launch kit case study thumbnail"> <!-- Accessible thumbnail alt -->
+            <figcaption>Case Study #1 — Short‑form launch kit</figcaption> <!-- Short caption for context -->
+          </figure> <!-- End item -->
+          <figure class="tile" role="listitem"> <!-- Portfolio item wrapper with figure semantics -->
+            <img src="./assets/portfolio_placeholder.jpg" alt="Rebrand and social system case study thumbnail"> <!-- Accessible thumbnail alt -->
+            <figcaption>Case Study #2 — Rebrand + social system</figcaption> <!-- Short caption -->
+          </figure> <!-- End item -->
+          <figure class="tile" role="listitem"> <!-- Portfolio item wrapper with figure semantics -->
+            <img src="./assets/portfolio_placeholder.jpg" alt="Nonprofit awareness video case study thumbnail"> <!-- Accessible thumbnail alt -->
+            <figcaption>Case Study #3 — Nonprofit awareness video</figcaption> <!-- Short caption -->
+          </figure> <!-- End item -->
+        </div> <!-- End grid -->
+      </div> <!-- End container -->
+    </section> <!-- End Portfolio -->
+
+    <section id="quote" class="section section--highlight" aria-labelledby="quote-title"> <!-- Lead capture form powered by Firebase -->
+      <div class="container"> <!-- Standard wrapper for form width -->
+        <h2 id="quote-title">Get a Quote</h2> <!-- Section heading for form -->
+        <form id="quoteForm" class="form" autocomplete="on" novalidate> <!-- Enable autocomplete; keep custom validation -->
+          <label> <!-- Name field label for association -->
+            <span>Name</span> <!-- Visible label text for name input -->
+            <input name="name" type="text" required minlength="2" inputmode="text" placeholder="Your full name"> <!-- Name input with constraints and helpful placeholder -->
+          </label> <!-- End name label -->
+          <label> <!-- Email field label for association -->
+            <span>Email</span> <!-- Visible label text for email input -->
+            <input name="email" type="email" required autocomplete="email" placeholder="you@example.com"> <!-- Email input with HTML5 validation -->
+          </label> <!-- End email label -->
+          <label> <!-- Service selector label for context -->
+            <span>Service</span> <!-- Visible label text for select -->
+            <select name="service" required> <!-- Required select to categorize lead -->
+              <option value="">Choose a service…</option> <!-- Placeholder option prompting selection -->
+              <option>Brand Kit</option> <!-- Option value listing -->
+              <option>Social Media Kit</option> <!-- Option value listing -->
+              <option>Short-Form Video</option> <!-- Option value listing -->
+              <option>Landing Page</option> <!-- Option value listing -->
+            </select> <!-- End select -->
+          </label> <!-- End service label -->
+          <label> <!-- Message field label for association -->
+            <span>Project Details</span> <!-- Visible label text for textarea -->
+            <textarea name="message" rows="5" placeholder="Tell us about your goals, audience, and timeline."></textarea> <!-- Free-form details field -->
+          </label> <!-- End message label -->
+          <button class="btn btn--accent" type="submit">Send Request</button> <!-- Submit button styled as primary CTA -->
+          <p id="quoteStatus" role="status" aria-live="polite"></p> <!-- Live region announces success or error to screen readers -->
+        </form> <!-- End quote form -->
+      </div> <!-- End container -->
+    </section> <!-- End Quote -->
+
+    <section id="contact" class="section section--alt" aria-labelledby="contact-title"> <!-- Contact section for direct outreach -->
+      <div class="container"> <!-- Standard width constraint -->
+        <h2 id="contact-title">Contact</h2> <!-- Section heading -->
+        <p>Email: <a href="mailto:hello@epicmind.media">hello@epicmind.media</a></p> <!-- Clickable email link -->
+      </div> <!-- End container -->
+    </section> <!-- End Contact -->
+  </main> <!-- End main -->
+
+  <footer class="footer" role="contentinfo"> <!-- Footer landmark with small print -->
+    <div class="container footer__row"> <!-- Layout wrapper for footer items -->
+      <small>© <span id="year"></span> Epic Mind Media. All rights reserved.</small> <!-- Dynamic year keeps the footer current -->
+      <a class="back-to-top" href="#top">Back to top ↑</a> <!-- Convenience link to return to the top anchor -->
+    </div> <!-- End footer row -->
+  </footer> <!-- End contentinfo -->
+
+  <script src="./app.js" defer></script> <!-- Defer main JavaScript for interactivity and Firebase -->
+</body> <!-- End body -->
+</html> <!-- End HTML document -->
