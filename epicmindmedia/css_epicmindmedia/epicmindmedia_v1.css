@@ -128,14 +128,25 @@ body{
 .btn{display:inline-block;padding:.7rem 1rem;border-radius:calc(var(--radius) - 6px);font-weight:700;letter-spacing:.2px;transition:transform var(--speed),background var(--speed),box-shadow var(--speed)}
 .btn--accent{background:var(--accent);color:var(--ink)}
 
+/* Default: white text on transparent header */
+.header .nav__cta .btn.btn--accent { color: var(--paper); }
 
-/* Fix: ensure Get a Quote hover text color overrides everything */
-.btn--accent:hover {
-  background: var(--accent) !important;    /* orange background */
-  color: var(--ink) !important;            /* dark navy text */
-  filter: brightness(0.95);                /* subtle darken */
+/* On scroll: orange chip uses dark text */
+.header.is-scrolled .nav__cta .btn.btn--accent { color: var(--ink); }
+
+/* Hover/Focus/Active: keep contrast-safe */
+.header .nav__cta .btn.btn--accent:hover,
+.header .nav__cta .btn.btn--accent:focus-visible,
+.header .nav__cta .btn.btn--accent:active {
+  background: var(--accent) !important;
+  color: var(--ink) !important;
+  filter: brightness(0.95);
+  text-decoration: none;
 }
 
+/* Keep visited color consistent */
+.header .nav__cta .btn.btn--accent:visited { color: var(--paper); }
+.header.is-scrolled .nav__cta .btn.btn--accent:visited { color: var(--ink); }
 
 
 .btn--light{background:#eaf0ff;color:#0b1030}
