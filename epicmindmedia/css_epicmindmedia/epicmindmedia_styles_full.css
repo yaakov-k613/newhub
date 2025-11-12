@@ -1,0 +1,245 @@
+/* ===============================
+   Epic Mind Media — Global Styles
+   Mobile-first, accessible, fully commented CSS
+   Brand Palette:
+     --ink       : #060b30 (deep blue base)
+     --accent    : #ffa500 (orange CTA/accents)
+     --paper     : #ffffff (white text/base)
+     --earth     : #483033 (brown detail tone)
+     --highlight : #0074e4 (support/hover blue)
+   =============================== */
+
+/* ========== Design Tokens (CSS Variables) ========== */
+:root { /* Centralized theme variables for easy theming/maintenance */
+  --ink: #060b30;            /* Primary background and ink tone */
+  --accent: #ffa500;         /* Primary accent used for CTAs */
+  --paper: #ffffff;          /* Primary text color on dark background */
+  --earth: #483033;          /* Secondary accent for decorative rules */
+  --highlight: #0074e4;      /* Hover/state color, subtle glows */
+  --muted: #b9c4d6;          /* Secondary text on dark */
+  --radius: 16px;            /* Global rounding for cards and inputs */
+  --shadow: 0 10px 30px rgba(0,0,0,.18); /* Depth for elevated elements */
+  --max: 1100px;             /* Content max-width */
+  --speed: 180ms;            /* Default transition speed */
+}
+
+/* ========== CSS Reset / Base ========== */
+*,
+*::before,
+*::after { box-sizing: border-box; } /* Predictable sizing including borders/padding */
+html, body { margin: 0; padding: 0; } /* Remove default UA spacing */
+html { scroll-behavior: smooth; } /* Smooth in-page anchor scrolling */
+body {
+  background: var(--ink);          /* Dark blue base */
+  color: var(--paper);             /* White text for contrast */
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; /* Legible default stack */
+  line-height: 1.6;                /* Comfortable reading */
+  -webkit-font-smoothing: antialiased; /* Crisper type rendering */
+  text-rendering: optimizeLegibility;   /* Hinting for body copy */
+}
+
+/* ========== Media / Links / Forms Defaults ========== */
+img { max-width: 100%; height: auto; display: block; } /* Responsive images */
+a { color: inherit; text-decoration: none; } /* Unstyled by default; styled on hover/focus below */
+button, input, select, textarea { font: inherit; color: inherit; } /* Inherit font and color for controls */
+
+/* ========== Accessibility Helpers ========== */
+.skip-link {
+  position: absolute; left: -9999px; top: auto; /* Visually hide off-canvas */
+  width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus {
+  left: 1rem; top: 1rem; width: auto; height: auto; /* Reveal when keyboard-focused */
+  background: var(--paper); color: var(--ink);
+  padding: .5rem .75rem; border-radius: 10px; z-index: 9999;
+}
+
+/* Focus ring for keyboard users with high contrast and no outline removal */
+:where(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 3px solid var(--highlight);        /* Blue ring for visibility */
+  outline-offset: 2px;                        /* Separate ring from element edge */
+  box-shadow: 0 0 0 4px rgba(0,116,228,.2);   /* Soft halo for additional focus */
+}
+
+/* ========== Layout Utilities ========== */
+.container { max-width: var(--max); margin-inline: auto; padding-inline: 1rem; } /* Center body content with side padding */
+.section { padding: clamp(2.5rem, 6vw, 5rem) 0; } /* Vertical rhythm scales with viewport */
+.section--alt { background: #0a123e; } /* Slightly different section tone for separation */
+.section--highlight { background: linear-gradient(160deg, #0a123e, #060b30); border-block: 1px solid rgba(255,255,255,.06); } /* Gradient emphasis */
+
+/* ========== Header & Navigation ========== */
+.header {
+  position: sticky; top: 0; z-index: 1000;           /* Keep header visible while scrolling */
+  background: rgba(6,11,48,.6); backdrop-filter: blur(8px); /* Translucent glass effect over content */
+  transition: background var(--speed) ease;           /* Smooth darkening on scroll */
+}
+.header__row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-block: .6rem;                               /* Compact vertical spacing */
+}
+.logo img {
+  width: 64px; height: 64px; border-radius: 50%;      /* Round avatar-style logo */
+  box-shadow: var(--shadow);                          /* Subtle elevation for prominence */
+  border: 2px solid rgba(255,255,255,.15);            /* Soft ring to separate from background */
+}
+.nav-toggle {
+  display: inline-grid; place-items: center;          /* Center bars inside button */
+  width: 42px; height: 42px; padding: 8px; border: 0; background: transparent; cursor: pointer;
+  border-radius: 12px; transition: background var(--speed) ease;
+}
+.nav-toggle:hover { background: rgba(255,255,255,.06); } /* Light hover for affordance */
+.nav-toggle .bar {
+  width: 100%; height: 3px; background: var(--paper); border-radius: 2px; margin-top: 5px;
+  transition: transform var(--speed) ease;            /* Animate bars if needed */
+}
+/* Primary nav styles (mobile-first: off-canvas panel) */
+.nav {
+  position: fixed; inset: 0 0 0 auto; width: min(80vw, 340px);
+  background: #0a123e; transform: translateX(100%);   /* Keep panel hidden off-canvas */
+  transition: transform var(--speed) ease; padding: 6rem 1rem 1rem; box-shadow: var(--shadow);
+}
+.nav.open { transform: translateX(0); }                /* Slide-in when toggled */
+.nav__list { list-style: none; display: grid; gap: 1rem; } /* Stack links vertically on mobile */
+.nav__list a {
+  padding: .6rem .75rem; border-radius: 10px;         /* Click targets large and comfortable */
+  transition: color var(--speed) ease, background var(--speed) ease, transform var(--speed) ease;
+}
+.nav__list a:hover { background: rgba(255,255,255,.06); transform: translateX(2px); } /* Subtle slide hover */
+.nav__cta .btn { margin-top: .25rem; }                 /* Space CTA slightly from other links */
+
+/* Desktop nav (enhanced at >= 900px) */
+@media (min-width: 900px) {
+  .nav-toggle { display: none; }                       /* Hide hamburger on large screens */
+  .nav { position: static; transform: none; width: auto; background: transparent; padding: 0; box-shadow: none; }
+  .nav__list { display: flex; align-items: center; gap: 1rem; }
+}
+
+/* ========== Buttons ========== */
+.btn {
+  display: inline-block; padding: .7rem 1rem; border-radius: calc(var(--radius) - 6px);
+  background: #131a4f; color: var(--paper); font-weight: 700; letter-spacing: .2px;
+  border: 1px solid rgba(255,255,255,.12); box-shadow: var(--shadow);
+  transition: transform var(--speed) ease, box-shadow var(--speed) ease, background var(--speed) ease;
+}
+.btn:hover {
+  transform: translateY(-2px);                         /* Lift on hover to signal interactivity */
+  box-shadow: 0 14px 34px rgba(0,0,0,.25);
+}
+.btn--accent { background: var(--accent); color: #1b1200; border-color: rgba(0,0,0,.08); } /* Orange CTA with dark text */
+.btn--accent:hover { background: color-mix(in srgb, var(--accent) 86%, #fff); } /* Slightly lighter on hover */
+.btn--light { background: #eaf0ff; color: #0b1030; }  /* Light variant for hero contrast */
+.btn--light:hover { background: #f4f7ff; }            /* Gentle hover */
+
+/* ========== Hero Section (Full-bleed video) ========== */
+.hero {
+  position: relative; min-height: min(92vh, 900px); display: grid; place-items: end center;
+}
+.hero__media { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.hero__video {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%;
+  filter: saturate(1.08) contrast(1.05);               /* Slight pop for video */
+}
+.hero__overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 40% at 50% 25%, rgba(0,0,0,.25), transparent 60%),
+    linear-gradient(to top, rgba(6,11,48,.75), rgba(6,11,48,.15)); /* Maintain text legibility */
+}
+.hero__content {
+  text-align: center; padding: 12vh 1rem 7vh;          /* Vertical spacing that adapts to viewport */
+}
+.hero__content h1 {
+  margin: 0 0 .5rem; font-size: clamp(2rem, 6vw, 4rem); line-height: 1.1; /* Scalable headline */
+}
+.hero__content p { max-width: 62ch; margin: 0 auto 1rem; color: var(--muted); } /* Comfortable line length */
+
+/* ========== Services (Cards Grid) ========== */
+.cards {
+  display: grid; grid-template-columns: 1fr; gap: 1rem; /* Mobile: single column */
+  margin-top: 1rem;
+}
+.card {
+  background: #0b1038; border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow);
+  transition: transform var(--speed) ease, box-shadow var(--speed) ease, border-color var(--speed) ease;
+}
+.card h3 { margin: 0 0 .25rem; color: var(--paper); }   /* Clear card titles */
+.card p { color: var(--muted); }                        /* Softer tone for body text */
+.card:hover {
+  transform: translateY(-3px);                          /* Subtle lift on hover */
+  border-color: var(--highlight);                       /* Blue edge to indicate focus/hover */
+  box-shadow: 0 16px 40px rgba(0,0,0,.28);
+}
+@media (min-width: 640px) { .cards { grid-template-columns: repeat(2, 1fr); } } /* Tablets: 2-up grid */
+@media (min-width: 960px) { .cards { grid-template-columns: repeat(4, 1fr); } } /* Desktops: 4-up grid */
+
+/* ========== Portfolio Grid ========== */
+.grid {
+  display: grid; grid-template-columns: 1fr; gap: 1rem; /* Mobile single column first */
+  margin-top: 1rem;
+}
+.tile {
+  background: #0b1038; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08); box-shadow: var(--shadow);
+  transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+}
+.tile img { aspect-ratio: 4 / 3; object-fit: cover; }   /* Consistent thumbnail ratio */
+.tile figcaption { padding: .75rem; color: var(--muted); border-top: 1px solid rgba(255,255,255,.06); }
+.tile:hover {
+  transform: translateY(-3px);                          /* Lift on hover for affordance */
+  box-shadow: 0 16px 40px rgba(0,0,0,.28);
+}
+@media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } } /* Medium screens: 2 columns */
+@media (min-width: 1120px) { .grid { grid-template-columns: repeat(3, 1fr); } }/* Wide screens: 3 columns */
+
+/* ========== Forms (Quote Section) ========== */
+.form {
+  display: grid; grid-template-columns: 1fr; gap: 1rem; /* Single column on mobile */
+  margin-top: 1rem;
+}
+.form label { display: grid; gap: .35rem; }            /* Stack label text with control */
+.form span { font-weight: 600; letter-spacing: .2px; }  /* Stronger label look */
+.form input, .form select, .form textarea {
+  padding: .8rem; border-radius: 12px; border: 1px solid rgba(255,255,255,.12);
+  background: #0b1038; color: var(--paper); box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  transition: border-color var(--speed) ease, box-shadow var(--speed) ease;
+}
+.form input:focus, .form select:focus, .form textarea:focus {
+  border-color: var(--accent);                          /* Orange focus edge for inputs */
+  box-shadow: 0 0 0 3px rgba(255,165,0,.18);            /* Soft orange halo */
+}
+.form textarea { min-height: 140px; resize: vertical; } /* Allow vertical resize for detailed briefs */
+.form button { justify-self: start; }                   /* Keep CTA aligned left in form flow */
+#quoteStatus { margin-top: .25rem; font-weight: 700; color: var(--highlight); } /* Live status feedback styling */
+
+/* Larger screens: two-column form layout */
+@media (min-width: 800px) {
+  .form { grid-template-columns: 1fr 1fr; }
+  .form textarea, .form button { grid-column: 1 / -1; } /* Textarea & button span full width */
+}
+
+/* ========== Contact Section ========== */
+#contact p a {
+  border-bottom: 2px solid var(--earth);                /* Brown underline to echo brand detail */
+  transition: border-color var(--speed) ease, color var(--speed) ease;
+}
+#contact p a:hover { color: var(--accent); border-color: var(--accent); } /* Orange accent on hover */
+
+/* ========== Footer ========== */
+.footer {
+  background: #0a123e; border-top: 1px solid rgba(255,255,255,.08);
+  padding: 2rem 0;
+}
+.footer__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.back-to-top { opacity: .85; transition: opacity var(--speed) ease, transform var(--speed) ease; }
+.back-to-top:hover { opacity: 1; transform: translateY(-2px); } /* Small lift on hover */
+
+/* ========== Link Hover Defaults (site-wide) ========== */
+a:hover { color: color-mix(in srgb, var(--paper) 92%, var(--accent)); } /* Slight warm shift on hover */
+
+/* ========== Print Styles (basic) ========== */
+@media print {
+  .hero__media, .nav, .nav-toggle, .btn { display: none !important; } /* Remove non-essential visual elements */
+  body { background: #fff; color: #000; }                               /* Printer-friendly */
+  a { color: #000; text-decoration: underline; }                        /* Underline links for clarity */
+}
