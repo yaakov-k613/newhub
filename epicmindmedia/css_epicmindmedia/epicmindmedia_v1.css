@@ -156,12 +156,6 @@ body.nav-open { overflow: hidden; }
     transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
   }
 
-  .header .nav__cta .btn.btn--accent:active {
-  background: var(--accent);
-  color: var(--ink);
-  filter: brightness(0.95);
-  text-decoration: none;
-}
 }
 
 
@@ -182,8 +176,9 @@ body.nav-open { overflow: hidden; }
     transition:gap .25s ease;
   }
 
-  /* AFTER SCROLL: slightly wider spacing to match chip look */
-  .header.is-scrolled .nav__list{ gap:16px } /* 1rem ≈ 16px */
+/* AFTER SCROLL: slightly wider spacing to match chip look */
+.header.is-scrolled .nav__list{ gap:16px }
+
 
   /* PRE-SCROLL items: natural width + only vertical padding (no extra inline padding) */
   .nav__list > li:not(.nav__cta) > a{
@@ -213,8 +208,16 @@ body.nav-open { overflow: hidden; }
 .header.is-scrolled .nav__cta .btn.btn--accent { color: var(--ink); }
 
 /* Hover/Focus/Active: keep contrast-safe */
+/* CTA hover/focus/active (works both pre- and post-scroll) */
 .header .nav__cta .btn.btn--accent:hover,
 .header .nav__cta .btn.btn--accent:focus-visible,
+.header .nav__cta .btn.btn--accent:active{
+  background: var(--accent);
+  color: var(--ink);
+  filter: brightness(0.95);
+  text-decoration: none;
+}
+
 
 
 /* CTA keyboard focus ring */
@@ -287,13 +290,16 @@ a:hover{color:var(--accent)}
   border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow);
   transition:transform var(--speed),border-color var(--speed);
 }
-.card:hover{transform:translateY(-3px);border-color:var(--highlight)}
-.card h3{margin:0 0 .25rem}
+.card h3 { margin: 0 0 .25rem; }
 
-@media (hover:hover) and (pointer:fine){
-  .card:hover{ transform:translateY(-3px) }
-  .tile:hover{ transform:translateY(-3px) }
+@media (hover:hover) and (pointer:fine) {
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--highlight);
+  }
+  .tile:hover { transform: translateY(-3px); }
 }
+
 
 
 /* =========================================================
