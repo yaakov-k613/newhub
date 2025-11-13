@@ -502,3 +502,105 @@ img, video { max-width:100%; height:auto; display:block; }
 @media (prefers-reduced-motion:reduce){
   .about__media img{ transition:none; transform:none; opacity:1; }
 }
+
+/* SERVICES SECTION */
+/* .card__title { display: flex; align-items: center; gap: .5rem; }
+.card__icon { font-size: 1.5rem; line-height: 1; } */
+/* ===== Services Section ===== */
+.section--alt {
+  background: rgba(255,255,255,0.02);
+  padding: clamp(3.5rem, 6vw, 6rem) 0;
+}
+
+/* Centered Title & Intro */
+#services .section-title,
+#services .section-intro {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-intro {
+  max-width: 700px;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Card Grid Layout */
+.cards {
+  display: grid;
+  gap: clamp(1.5rem, 2.5vw, 2.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Card Base Styles */
+.card {
+  background: var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem 1.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(0,0,0,.25);
+}
+
+/* Card Headings & Icons */
+.card__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--paper);
+}
+
+.card__icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+/* Card Description */
+.card__desc {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin-bottom: 0.9rem;
+}
+
+/* Bullet Lists */
+.card__list {
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.card__list li {
+  margin: 0.35rem 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  #services .section-title,
+  #services .section-intro {
+    text-align: left;
+    padding: 0 1rem;
+  }
+  .card {
+    padding: 1.5rem 1.25rem;
+  }
+  .card__title {
+    font-size: 1.1rem;
+  }
+}
+#services .card { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+#services .card.visible { opacity: 1; transform: none; }

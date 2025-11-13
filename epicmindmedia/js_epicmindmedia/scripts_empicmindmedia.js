@@ -193,3 +193,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!el || !('IntersectionObserver' in window)) return;
   new IntersectionObserver(([e],o)=>{ if(e.isIntersecting){ el.classList.add('in'); o.disconnect(); }},{rootMargin:'-10% 0px'}).observe(el);
 })();
+// SERVICES SECTION
+(() => {
+  const cards = document.querySelectorAll('#services .card');
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  cards.forEach(card => observer.observe(card));
+})();
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
