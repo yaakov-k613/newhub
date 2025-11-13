@@ -323,6 +323,26 @@ a:hover{ color:var(--accent); }
 .hero__content{text-align:center;padding:12vh 1rem 7vh}
 .hero__content h1{margin:0 0 .5rem;font-size:clamp(2rem,6vw,4rem)}
 .hero__content p{max-width:62ch;margin:0 auto 1rem;color:#dfe7ff}
+/* Hero overlay reveal */
+.hero__content.is-hidden {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.hero__content.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity 320ms var(--speed, ease), transform 320ms var(--speed, ease);
+}
+
+/* Accessibility: Disable animation if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero__content.is-hidden { opacity: 0; transform: none; }
+  .hero__content.is-visible { transition: none; }
+}
+
 
 
 /* =========================================================

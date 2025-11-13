@@ -145,3 +145,41 @@ document.addEventListener('DOMContentLoaded', () => {
     heroVideo.currentTime = Math.max(0, d - 0.05);
   });
 });
+
+// HERO: reveal overlay after video ends (with cinematic delay + solid fallbacks)
+document.addEventListener('DOMContentLoaded', () => {
+  const video = document.querySelector('.hero__video');
+  const overlay = document.querySelector('.hero__content');
+  if (!video || !overlay) return;
+
+   const DELAY_MS = 1000;        // cinematic pause after end
+
+  const TIMEOUT_MS = 10000;     // absolute safety reveal
+  
+  const showOverlay = () => {
+    overlay.classList.remove('is-hidden');
+    overlay.classList.add('is-visible');
+    overlay.setAttribute('aria-hidden', 'false');
+  };
+
+  const reveal = () => setTimeout(showOverlay, DELAY_MS);
+
+  // Primary: on natural end
+  video.addEventListener('ended', reveal, { once: true });
+
+  // If metadata is ready and duration is tiny (short clip), still reveal after end
+  video.addEventListener('loadedmetadata', () => {
+    if (Number.isFinite(video.duration) && video.duration < 1.0) setTimeout(reveal, 500);
+  }, { once: true });
+
+  // Try autoplay; if blocked, we still have safety timer
+  video.play?.().catch(() => { /* fallback timer handles it */ });
+
+  // Safety: reveal no matter what after TIMEOUT_MS
+  const safety = setTimeout(showOverlay, TIMEOUT_MS);
+  overlay.addEventListener('transitionstart', () => clearTimeout(safety), { once: true });
+
+  // Error fallback
+  video.addEventListener('error', () => reveal(), { once: true });
+});
+
