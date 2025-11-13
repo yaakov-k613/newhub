@@ -13,9 +13,9 @@
   --muted:#b9c4d6;         /* soft gray */
   --radius:16px;           /* roundness */
   --shadow:0 10px 30px rgba(0,0,0,.18);
-  --max:1400px;    /* wider layout for large screens */
+  --max:1400px;            /* wider layout for large screens */
   --speed:180ms;           /* animation speed */
-    /* aliases */
+  /* aliases */
   --color-bg-primary: var(--ink);
   --color-text-primary: var(--paper);
   --color-focus: var(--highlight);
@@ -24,57 +24,38 @@
 /* ---------- Reset & Base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 
-/* CONSOLIDATED & CORRECTED BASE STYLES */
 html{
   margin:0;
   padding:0;
   scroll-behavior:smooth;
-  
-  /* Fix 1: Force vertical scrollbar to always show (no flashing/jumping) */
-  overflow-y: scroll; 
-  
-  /* Fix 2: Prevent horizontal overflow */
-  overflow-x: hidden; 
-  
-  -webkit-text-size-adjust: 100%; 
+  overflow-y: scroll;  /* avoid layout jump */
+  overflow-x: hidden;  /* prevent horizontal bleed */
+  -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body{
   margin:0;
   padding:0;
-  background:var(--ink); color:var(--paper);
+  background:var(--ink);
+  color:var(--paper);
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  line-height:1.6; -webkit-font-smoothing:antialiased;
-  
-  /* Fix 3: Remove redundant/conflicting overflow rules from body */
-  /* Remove: overflow-x: hidden; */
-  /* Remove: max-width: 100vw; */
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* *{outline:1px dashed rgba(255,165,0,.3)}  */
-
+/* Debug outline (optional) */
+/* *{outline:1px dashed rgba(255,165,0,.3)} */
 
 @media (max-width:480px){
-  body{ 
-    line-height:1.7; 
-  }
+  body{ line-height:1.7; }
 }
 
-
-html { 
-  -webkit-text-size-adjust: 100%;  /* Stops Safari from resizing text */
-  text-size-adjust: 100%;          /* Cross-browser equivalent */
-}
-input, select, textarea { 
-  font: inherit;                   /* Forces form text to match site font */
-}
-
-
+input, select, textarea { font: inherit; }
 
 /* =========================================================
    ACCESSIBILITY: REDUCE MOTION
-   ========================================================= */
+========================================================= */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
@@ -91,15 +72,10 @@ input, select, textarea {
   outline-offset:2px;
   box-shadow:0 0 0 4px rgba(0,116,228,.22);
 }
-
 @media (forced-colors: active){
   :focus{ outline: 2px solid CanvasText; outline-offset:2px; }
   a, .btn{ forced-color-adjust:auto; }
 }
-
-
-
-
 
 /* ---------- Layout Utilities ---------- */
 .container{
@@ -111,45 +87,32 @@ input, select, textarea {
 .section{padding:clamp(2.5rem,6vw,5rem) 0}
 .section--alt{background:#0a123e}
 .section--highlight{background:linear-gradient(160deg,#0a123e,#060b30)}
-
-.section[id]{ scroll-margin-top: clamp(64px, 12vh, 96px); }
-
-.anchor-target{ scroll-margin-top: clamp(64px, 12vh, 96px); }
-
-
-
-
+.section[id], .anchor-target{ scroll-margin-top: clamp(64px, 12vh, 96px); }
 
 /* =========================================================
    HEADER — Fully Transparent
 ========================================================= */
 .header{
   position: fixed; top:0; left:0; right:0;
-  z-index: 1000;                /* restore stacking */
+  z-index: 1000;
   background: transparent; box-shadow: none;
   transition: background var(--speed) ease, backdrop-filter var(--speed) ease;
-  /* remove: contain: paint;  */
 }
-.header__row{ width: 100%; }    /* replace 100vw with 100% */
-
-
-/* Keep your existing .header.is-scrolled {...} */
-
-.header.is-scrolled{background:rgba(6,11,48,0)} /* stays transparent per spec */
 .header__row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  padding:.6rem 1rem;
-  /* ADD THIS: Ensure the row fills the full viewport width */
-  width: 100vw;
+  width:100%;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; padding:.6rem 1rem;
 }
+
+/* Transparent both states per spec (you can add blur if desired) */
+.header.is-scrolled{ background: rgba(6,11,48,0); }
 
 /* ---------- Logo ---------- */
 .logo img{
-  width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,255,255,.15);
-  transition:transform .25s ease,filter .25s ease,box-shadow .25s ease;will-change:transform;
+  width:64px;height:64px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.15);
+  transition:transform .25s ease,filter .25s ease,box-shadow .25s ease;
+  will-change:transform;
 }
 .logo:hover img,.logo:focus-visible img{
   transform:translateY(-2px) scale(1.06);
@@ -158,342 +121,201 @@ input, select, textarea {
   border-color:rgba(255,165,0,.8);
 }
 
-/* ---------- Navigation (mobile core) ---------- */
+/* ---------- Navigation (mobile first) ---------- */
 .nav-toggle{
-  display:inline-grid;
-  place-items:center;
-  width:44px; /* increased to meet accessibility tap target */
-  height:44px;
-  padding:8px;
-  border:0;
-  background:transparent;
-  cursor:pointer;
-  border-radius:12px;
+  display:inline-grid; place-items:center;
+  width:44px; height:44px; padding:8px;
+  border:0; background:transparent; cursor:pointer; border-radius:12px;
 }
-
-.nav-toggle:focus-visible {
-  outline:3px solid var(--highlight);
-  outline-offset:3px;
+.nav-toggle:focus-visible{
+  outline:3px solid var(--highlight); outline-offset:3px;
   box-shadow:0 0 0 4px rgba(0,116,228,.25);
   background:rgba(0,116,228,.08);
-
 }
-
-
 .nav-toggle .bar{width:100%;height:3px;background:var(--paper);border-radius:2px;margin-top:5px}
-/* Off-canvas drawer: no transforms = no horizontal bleed */
-/* Off-canvas drawer: no transforms = no horizontal bleed */
+
+/* Off-canvas drawer */
 .nav{
-  position: fixed;
-  top: 0; bottom: 0; left: auto; right: -100%;
+  position: fixed; top:0; bottom:0; right:-100%; left:auto;
   width: min(80vw, 340px);
   background:#0a123e;
-  transition: right var(--speed) ease, box-shadow var(--speed) ease;
-  will-change: right;
+  transition:right var(--speed) ease, box-shadow var(--speed) ease;
+  will-change:right;
   overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
-  box-shadow: none;                 /* 🔹 shadow OFF when closed */
+  box-shadow:none;
 }
-.nav.open{ 
-  right: 0; 
-  box-shadow: var(--shadow);        /* 🔹 shadow ON only when visible */
-}
+.nav.open{ right:0; box-shadow:var(--shadow); }
 
+body.nav-open{ overflow:hidden; }
 
-
-
-/* Improve touch scrolling in the off-canvas panel */
-.nav{ overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
-
-.nav__list{list-style:none;display:grid;gap:1rem}
+.nav__list{ list-style:none; display:grid; gap:1rem; }
 .nav__list a{
-  color:var(--paper);padding:.6rem .75rem;border-radius:10px;
+  color:var(--paper);
+  padding:.6rem .75rem;
+  border-radius:10px;
   transition:color var(--speed),background var(--speed),transform var(--speed);
 }
 
-/* Lock body scroll when menu is open (toggle body.nav-open in JS) */
-body.nav-open { 
-  overflow: hidden;
-  body { overflow-y: scroll; }  /* safe fallback if needed */
-
+/* ---------- Desktop Nav ---------- */
+@media (min-width:900px){
+  .nav-toggle{ display:none; }
+  .nav{ position:static; right:auto; width:auto; background:transparent; padding:0; box-shadow:none; }
+  .nav__list{
+    display:flex; align-items:center; gap:24px; transition:gap .25s ease;
+  }
+  .nav__list > li:not(.nav__cta) > a{
+    display:inline-block; inline-size:auto;
+    text-align:center; white-space:nowrap;
+    padding-block:.6rem; padding-inline:0; border-radius:10px;
+  }
+  /* Equal-width chips on scroll (links + CTA) */
+  :root{ --navItemW: clamp(7.5rem, 8.5vw, 9rem); }
+  .header.is-scrolled .nav__list{ gap:16px; }
+  .header.is-scrolled .nav__list > li > a{
+    inline-size: var(--navItemW);
+    display:inline-flex; align-items:center; justify-content:center;
+    white-space:nowrap; padding-block:.5rem; padding-inline:0; text-align:center;
+  }
+  .header.is-scrolled .nav__list > li.nav__cta > a.btn{ inline-size: var(--navItemW); }
 }
 
-
-.nav__cta .btn{margin-top:.25rem}
-
+/* ---------- Orange chips on scroll (links only) ---------- */
 @media (min-width:900px){
-  /* Scrolled: give links orange chips (desktop only) */
-  .header.is-scrolled .nav .nav__list a {
+  .header.is-scrolled .nav .nav__list a{
     background: rgba(255,165,0,.90);
-    color: var(--ink);
+    color: var(--paper) !important;      /* white text for contrast */
     border: 1px solid rgba(0,0,0,.08);
     transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
   }
-
-}
-
-/* 🔹 Force white text on orange scroll state for high contrast */
-@media (min-width:900px){
-  .header.is-scrolled .nav .nav__list a {
-    background: rgba(255,165,0,.90);
-    color: var(--paper) !important;   /* keep text white */
-    border: 1px solid rgba(0,0,0,.08);
-    transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
-  }
-
-  /* Optional: make hover slightly darker for contrast */
-  .header.is-scrolled .nav .nav__list a:hover {
+  .header.is-scrolled .nav .nav__list a:hover{
     background: rgba(255,165,0,1);
-    color: var(--paper);
+    color: var(--paper) !important;
   }
-
-  /* Focus ring contrast for white text */
-  .header.is-scrolled .nav .nav__list a:focus-visible {
+  .header.is-scrolled .nav .nav__list a:focus-visible{
     outline: 3px solid var(--highlight);
     box-shadow: 0 0 0 4px rgba(0,116,228,.4);
   }
 }
 
-
-/* =========================================================
-   DESKTOP NAV — exact 24px pre-scroll, equal widths on scroll
-========================================================= */
-
-  @media (min-width:900px){
-  /* REDUCED MAX WIDTH: Clamp is now tighter to prevent overflow */
-  :root{ --navItemW: clamp(7.5rem, 8.5vw, 9rem) } 
-    
-
-  .nav-toggle{display:none}
-  .nav{position:static;transform:none;width:auto;background:transparent;padding:0;box-shadow:none}
-
-  /* PRE-SCROLL: true 24px gaps, natural widths (no internal empty space) */
-  .nav__list{
-    display:flex;
-    align-items:center;
-    gap:24px; /* exact 24px before scroll */
-    transition:gap .25s ease;
-  }
-
-/* AFTER SCROLL: slightly wider spacing to match chip look */
-.header.is-scrolled .nav__list{ gap:16px }
-
-
-  /* PRE-SCROLL items: natural width + only vertical padding (no extra inline padding) */
-  .nav__list > li:not(.nav__cta) > a{
-    display:inline-block;inline-size:auto;
-    text-align:center;white-space:nowrap;
-    padding-block:.6rem;padding-inline:0;border-radius:10px;
-  }
-
-  /* AFTER SCROLL: equal-width chips */
-  .header.is-scrolled .nav__list > li:not(.nav__cta) > a{
-    inline-size:var(--navItemW);
-  }
-
-  /* CTA remains natural size always */
-  .nav__list > li.nav__cta{flex:0 0 auto}
-  .nav__list > li.nav__cta > a{inline-size:auto}
-}
-
-/* Equal widths for ALL items (links + CTA) when scrolled */
-@media (min-width:900px){
-  :root{ --navItemW: clamp(7.5rem, 8.5vw, 9rem); }
-
-  /* Links (already orange on scroll) */
-  .header.is-scrolled .nav__list > li > a{
-    inline-size: var(--navItemW);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    padding-block: .5rem;
-    padding-inline: 0;
-    text-align: center;
-  }
-
-  /* CTA (match link chip width & height on scroll) */
-  .header.is-scrolled .nav__list > li.nav__cta > a.btn{
-    inline-size: var(--navItemW);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    padding-block: .5rem;
-    padding-inline: 0;
-    text-align: center;
-  }
-}
-
-
-/* I am not sure if this is correct */
-@media (hover:hover) and (pointer:fine){
-  .nav__list a{ transform:none; } /* neutralize past translateX */
-}
-
-
 /* ---------- Buttons ---------- */
-.btn{display:inline-block;padding:.7rem 1rem;border-radius:calc(var(--radius) - 6px);font-weight:700;letter-spacing:.2px;transition:transform var(--speed),background var(--speed),box-shadow var(--speed)}
-.btn--accent{background:var(--accent);color:var(--ink)}
+.btn{
+  display:inline-block; padding:.7rem 1rem;
+  border-radius:calc(var(--radius) - 6px);
+  font-weight:700; letter-spacing:.2px;
+  transition:transform var(--speed),background var(--speed),box-shadow var(--speed), color var(--speed);
+}
+.btn--accent{ background:var(--accent); color:var(--ink); }
 
-/* Default: white text on transparent header */
+/* Default CTA text color on transparent header */
 .header .nav__cta .btn.btn--accent { color: var(--paper); }
 
-/* On scroll: orange chip uses dark text */
-.header.is-scrolled .nav__cta .btn.btn--accent { color: var(--ink); }
+/* On scroll, original theme would flip to dark text; we’ll override below for CTA spec */
 
-/* Hover/Focus/Active: keep contrast-safe */
-/* CTA hover/focus/active (works both pre- and post-scroll) */
-.header .nav__cta .btn.btn--accent:hover,
-.header .nav__cta .btn.btn--accent:focus-visible,
-.header .nav__cta .btn.btn--accent:active{
-  background: var(--accent);
-  color: var(--ink);
-  filter: brightness(0.95);
-  text-decoration: none;
-}
-
-
-
-/* CTA keyboard focus ring */
-.header .nav__cta .btn.btn--accent:focus-visible {
-  outline: 3px solid var(--highlight);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(0,116,228,.2);
-}
-
-
-/* Keep CTA visited state consistent */
-.header .nav__cta .btn.btn--accent:visited { color: var(--paper); }
+/* ---------- CTA: Orange bg + Blue bold text, hover → White ---------- */
 @media (min-width:900px){
-  .header.is-scrolled .nav__cta .btn.btn--accent:visited { color: var(--ink); }
+  /* Pre-scroll */
+  .header .nav__cta .btn.btn--accent{
+    background: var(--accent);
+    color: var(--ink) !important;  /* blue text */
+    border: 2px solid var(--accent);
+    transition: color .2s ease, background .2s ease, filter .2s ease, border-color .2s ease;
+  }
+  .header .nav__cta .btn.btn--accent:hover,
+  .header .nav__cta .btn.btn--accent:focus-visible{
+    color: var(--paper) !important;      /* white on hover/focus */
+    background: var(--accent);
+    border-color: var(--accent);
+    filter: brightness(1.03);
+  }
+
+  /* Scrolled */
+  .header.is-scrolled .nav__cta .btn.btn--accent{
+    background: var(--accent);
+    color: var(--ink) !important;
+    border: 2px solid var(--accent);
+  }
+  .header.is-scrolled .nav__cta .btn.btn--accent:hover,
+  .header.is-scrolled .nav__cta .btn.btn--accent:focus-visible{
+    color: var(--paper) !important;
+  }
 }
 
-/* Pre-scroll focus ring (links before header gets .is-scrolled) */
+/* ---------- Link focus (pre-scroll) ---------- */
 .nav .nav__list a:focus-visible{
   outline:3px solid var(--highlight);
   box-shadow:0 0 0 4px rgba(0,116,228,.25);
   border-radius:10px;
 }
 
-/* Stronger focus ring on orange chips (desktop) */
-@media (min-width:900px){
-  .header.is-scrolled .nav .nav__list a:focus-visible {
-    outline: 3px solid var(--ink);
-    box-shadow: 0 0 0 4px rgba(255,165,0,.5);
-    border-radius: 10px;
-  }
-}
-
-/* Mobile: comfier tap targets */
+/* ---------- Mobile tap comfort ---------- */
 @media (max-width:900px){
-  .nav__list a {
-    padding: .9rem 1rem;
-  }
+  .nav__list a { padding:.9rem 1rem; }
 }
-
-
-
-/* Mobile tap polish */
-.nav__list a:focus-visible {
+.nav__list a:focus-visible{
   outline:3px solid var(--highlight);
-  outline-offset:2px;
-  border-radius:10px;
+  outline-offset:2px; border-radius:10px;
   box-shadow:0 0 0 3px rgba(0,116,228,.25);
 }
 
-
 a, button { -webkit-tap-highlight-color: transparent; }
-
 .btn--light{background:#eaf0ff;color:#0b1030}
 .btn--light:hover{background:#f4f7ff}
-
 a{ color:#dfe7ff; text-decoration:none; }
 a:hover{ color:var(--accent); }
-
 .btn:focus-visible{
   outline:3px solid var(--highlight);
   outline-offset:2px;
   box-shadow:0 0 0 4px rgba(0,116,228,.22);
 }
 
-
-
 /* =========================================================
    HERO
 ========================================================= */
-/* HERO */
 .hero{
   position:relative;
   min-height:min(92vh,900px);
-  display:grid;
-  place-items:end center;
-  overflow:hidden; /* or overflow: clip; if you prefer */
+  display:grid; place-items:end center;
+  overflow:hidden;
 }
-
-.hero__media{
-  position:absolute; inset:0;
-  z-index:-1; overflow:hidden;
-}
-
+.hero__media{ position:absolute; inset:0; z-index:-1; overflow:hidden; }
 .hero__video{
   width:100%; height:100%;
   object-fit:cover; object-position:50% 70%;
   filter:saturate(1.08) contrast(1.05);
 }
-
 .hero__overlay{
   position:absolute; inset:0;
   background:linear-gradient(to top, rgba(6,11,48,.60), rgba(6,11,48,.10));
   transition: background 320ms ease;
 }
-
 img, video { max-width:100%; height:auto; display:block; }
 
-
-
-
-/* Stronger dark overlay when text appears */
+/* Darker overlay when text appears */
 .hero.hero--dim .hero__overlay {
   background: linear-gradient(
     to top,
-    rgba(0, 0, 20, 0.92),   /* cinematic dark base */
-    rgba(6, 11, 48, 0.90),  /* deep blue mid tone */
-    rgba(6, 11, 48, 0.55)   /* soft fade top */
+    rgba(0, 0, 20, 0.92),
+    rgba(6, 11, 48, 0.90),
+    rgba(6, 11, 48, 0.55)
   );
-  transition: background 420ms ease; /* smooth fade timing */
+  transition: background 420ms ease;
 }
-
-
-
 @media (prefers-reduced-motion: reduce){
   .hero__overlay{ transition:none; }
 }
 
-
 .hero__content{text-align:center;padding:12vh 1rem 7vh}
 .hero__content h1{margin:0 0 .5rem;font-size:clamp(2rem,6vw,4rem)}
 .hero__content p{max-width:62ch;margin:0 auto 1rem;color:#dfe7ff}
-/* Hero overlay reveal */
-.hero__content.is-hidden {
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
+.hero__content.is-hidden{ opacity:0; transform:translateY(8px); pointer-events:none; }
+.hero__content.is-visible{
+  opacity:1; transform:none; pointer-events:auto;
+  transition: opacity 320ms ease, transform 320ms ease;
 }
-
-.hero__content.is-visible {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-  transition: opacity 320ms var(--speed, ease), transform 320ms var(--speed, ease);
+@media (prefers-reduced-motion: reduce){
+  .hero__content.is-hidden{ opacity:0; transform:none; }
+  .hero__content.is-visible{ transition:none; }
 }
-
-/* Accessibility: Disable animation if user prefers reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .hero__content.is-hidden { opacity: 0; transform: none; }
-  .hero__content.is-visible { transition: none; }
-}
-
-
 
 /* =========================================================
    SERVICES
@@ -506,16 +328,10 @@ img, video { max-width:100%; height:auto; display:block; }
   transition:transform var(--speed),border-color var(--speed);
 }
 .card h3 { margin: 0 0 .25rem; }
-
-@media (hover:hover) and (pointer:fine) {
-  .card:hover {
-    transform: translateY(-3px);
-    border-color: var(--highlight);
-  }
-  .tile:hover { transform: translateY(-3px); }
+@media (hover:hover) and (pointer:fine){
+  .card:hover{ transform:translateY(-3px); border-color:var(--highlight); }
+  .tile:hover{ transform:translateY(-3px); }
 }
-
-
 
 /* =========================================================
    PORTFOLIO
@@ -526,11 +342,10 @@ img, video { max-width:100%; height:auto; display:block; }
   border:1px solid rgba(255,255,255,.12);
   overflow:hidden;transition:transform var(--speed);
 }
-.tile:hover{transform:translateY(-3px)}
 .tile img{aspect-ratio:4/3;object-fit:cover}
 .tile figcaption{ padding:.75rem; color:#cdd8ff; }
 
-
+/* Responsive grids */
 @media (min-width:640px){.cards{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:960px){.cards{grid-template-columns:repeat(4,1fr)}}
 @media (min-width:768px){.grid{grid-template-columns:repeat(2,1fr)}}
@@ -541,20 +356,17 @@ img, video { max-width:100%; height:auto; display:block; }
 ========================================================= */
 .form{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
 .form label{display:grid;gap:.35rem}
-
 .form input,.form select,.form textarea{
   padding:.8rem;border-radius:12px;border:1px solid rgba(255,255,255,.12);
   background:#0b1038;color:var(--paper);
   font-size:16px; /* prevents iOS zoom on focus */
 }
-
 .form ::placeholder{ color:#aab7e6; }
-
-
-.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,165,0,.18)}
+.form input:focus,.form select:focus,.form textarea:focus{
+  border-color:var(--accent); box-shadow:0 0 0 3px rgba(255,165,0,.18)
+}
 .form textarea{min-height:140px;resize:vertical}
 #quoteStatus{margin-top:.25rem;font-weight:700;color:var(--highlight)}
-
 @media (min-width:800px){
   .form{grid-template-columns:1fr 1fr}
   .form textarea,.form button{grid-column:1/-1}
@@ -565,7 +377,6 @@ img, video { max-width:100%; height:auto; display:block; }
 ========================================================= */
 #contact p a{border-bottom:2px solid var(--earth);transition:border-color var(--speed),color var(--speed)}
 #contact p a:hover{color:var(--accent);border-color:var(--accent)}
-
 .footer{background:#0a123e;border-top:1px solid rgba(255,255,255,.08);padding:2rem 0}
 .footer__row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .back-to-top{opacity:.85;transition:opacity var(--speed),transform var(--speed)}
