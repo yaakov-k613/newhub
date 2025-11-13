@@ -273,6 +273,36 @@ body.nav-open {
   .nav__list > li.nav__cta > a{inline-size:auto}
 }
 
+/* Equal widths for ALL items (links + CTA) when scrolled */
+@media (min-width:900px){
+  :root{ --navItemW: clamp(7.5rem, 8.5vw, 9rem); }
+
+  /* Links (already orange on scroll) */
+  .header.is-scrolled .nav__list > li > a{
+    inline-size: var(--navItemW);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    padding-block: .5rem;
+    padding-inline: 0;
+    text-align: center;
+  }
+
+  /* CTA (match link chip width & height on scroll) */
+  .header.is-scrolled .nav__list > li.nav__cta > a.btn{
+    inline-size: var(--navItemW);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    padding-block: .5rem;
+    padding-inline: 0;
+    text-align: center;
+  }
+}
+
+
 /* I am not sure if this is correct */
 @media (hover:hover) and (pointer:fine){
   .nav__list a{ transform:none; } /* neutralize past translateX */
