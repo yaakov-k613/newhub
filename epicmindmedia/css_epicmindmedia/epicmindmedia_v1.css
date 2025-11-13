@@ -23,16 +23,42 @@
 
 /* ---------- Reset & Base ---------- */
 *,*::before,*::after{box-sizing:border-box}
-html,body{margin:0;padding:0}
-html{scroll-behavior:smooth}
+
+/* CONSOLIDATED & CORRECTED BASE STYLES */
+html{
+  margin:0;
+  padding:0;
+  scroll-behavior:smooth;
+  
+  /* Fix 1: Force vertical scrollbar to always show (no flashing/jumping) */
+  overflow-y: scroll; 
+  
+  /* Fix 2: Prevent horizontal overflow */
+  overflow-x: hidden; 
+  
+  -webkit-text-size-adjust: 100%; 
+  text-size-adjust: 100%;
+}
+
 body{
+  margin:0;
+  padding:0;
   background:var(--ink); color:var(--paper);
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
   line-height:1.6; -webkit-font-smoothing:antialiased;
+  
+  /* Fix 3: Remove redundant/conflicting overflow rules from body */
+  /* Remove: overflow-x: hidden; */
+  /* Remove: max-width: 100vw; */
 }
 
+/* *{outline:1px dashed rgba(255,165,0,.3)}  */
+
+
 @media (max-width:480px){
-  body{ line-height:1.7; }
+  body{ 
+    line-height:1.7; 
+  }
 }
 
 
@@ -76,7 +102,12 @@ input, select, textarea {
 
 
 /* ---------- Layout Utilities ---------- */
-.container{max-width:var(--max);margin:auto;padding-inline:1rem}
+.container{
+  max-width:var(--max);
+  margin:auto;
+  padding-inline:1rem;
+  overflow-x: hidden;
+}
 .section{padding:clamp(2.5rem,6vw,5rem) 0}
 .section--alt{background:#0a123e}
 .section--highlight{background:linear-gradient(160deg,#0a123e,#060b30)}
@@ -93,11 +124,27 @@ input, select, textarea {
    HEADER — Fully Transparent
 ========================================================= */
 .header{
-  position:sticky;top:0;z-index:1000;background:transparent;backdrop-filter:none;box-shadow:none;
-  transition:background var(--speed) ease,backdrop-filter var(--speed) ease;
+  position: fixed; top:0; left:0; right:0;
+  z-index: 1000;                /* restore stacking */
+  background: transparent; box-shadow: none;
+  transition: background var(--speed) ease, backdrop-filter var(--speed) ease;
+  /* remove: contain: paint;  */
 }
+.header__row{ width: 100%; }    /* replace 100vw with 100% */
+
+
+/* Keep your existing .header.is-scrolled {...} */
+
 .header.is-scrolled{background:rgba(6,11,48,0)} /* stays transparent per spec */
-.header__row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem 1rem}
+.header__row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.6rem 1rem;
+  /* ADD THIS: Ensure the row fills the full viewport width */
+  width: 100vw;
+}
 
 /* ---------- Logo ---------- */
 .logo img{
@@ -134,20 +181,29 @@ input, select, textarea {
 
 
 .nav-toggle .bar{width:100%;height:3px;background:var(--paper);border-radius:2px;margin-top:5px}
+/* Off-canvas drawer: no transforms = no horizontal bleed */
+/* Off-canvas drawer: no transforms = no horizontal bleed */
 .nav{
-  position:fixed;inset:0 0 0 auto;width:min(80vw,340px);background:#0a123e;
-  transform:translateX(100%);transition:transform var(--speed) ease;
-  padding-block-start: calc(6rem + env(safe-area-inset-top));
-  padding-block-end: 1rem;
-  padding-inline: 1rem;
-  padding-inline-start: max(1rem, env(safe-area-inset-left));
-  box-shadow:var(--shadow);
+  position: fixed;
+  top: 0; bottom: 0; left: auto; right: -100%;
+  width: min(80vw, 340px);
+  background:#0a123e;
+  transition: right var(--speed) ease, box-shadow var(--speed) ease;
+  will-change: right;
+  overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+  box-shadow: none;                 /* 🔹 shadow OFF when closed */
 }
+.nav.open{ 
+  right: 0; 
+  box-shadow: var(--shadow);        /* 🔹 shadow ON only when visible */
+}
+
+
+
 
 /* Improve touch scrolling in the off-canvas panel */
 .nav{ overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
 
-.nav.open{transform:translateX(0)}
 .nav__list{list-style:none;display:grid;gap:1rem}
 .nav__list a{
   color:var(--paper);padding:.6rem .75rem;border-radius:10px;
@@ -155,11 +211,12 @@ input, select, textarea {
 }
 
 /* Lock body scroll when menu is open (toggle body.nav-open in JS) */
-body.nav-open { overflow: hidden; }
+body.nav-open { 
+  overflow: hidden;
+  body { overflow-y: scroll; }  /* safe fallback if needed */
 
-@media (hover: hover) and (pointer: fine) {
-  .nav__list a:hover { color: var(--accent); transform: translateX(2px); }
 }
+
 
 .nav__cta .btn{margin-top:.25rem}
 
@@ -178,8 +235,11 @@ body.nav-open { overflow: hidden; }
 /* =========================================================
    DESKTOP NAV — exact 24px pre-scroll, equal widths on scroll
 ========================================================= */
-@media (min-width:900px){
-  :root{ --navItemW: clamp(8rem, 9vw, 10rem) }  /* target chip width after scroll */
+
+  @media (min-width:900px){
+  /* REDUCED MAX WIDTH: Clamp is now tighter to prevent overflow */
+  :root{ --navItemW: clamp(7.5rem, 8.5vw, 9rem) } 
+    
 
   .nav-toggle{display:none}
   .nav{position:static;transform:none;width:auto;background:transparent;padding:0;box-shadow:none}
@@ -212,6 +272,12 @@ body.nav-open { overflow: hidden; }
   .nav__list > li.nav__cta{flex:0 0 auto}
   .nav__list > li.nav__cta > a{inline-size:auto}
 }
+
+/* I am not sure if this is correct */
+@media (hover:hover) and (pointer:fine){
+  .nav__list a{ transform:none; } /* neutralize past translateX */
+}
+
 
 /* ---------- Buttons ---------- */
 .btn{display:inline-block;padding:.7rem 1rem;border-radius:calc(var(--radius) - 6px);font-weight:700;letter-spacing:.2px;transition:transform var(--speed),background var(--speed),box-shadow var(--speed)}
@@ -303,15 +369,35 @@ a:hover{ color:var(--accent); }
 /* =========================================================
    HERO
 ========================================================= */
-.hero{position:relative;min-height:min(92vh,900px);display:grid;place-items:end center}
-.hero__media{position:absolute;inset:0;z-index:-1;overflow:hidden}
-.hero__video{width:100%;height:100%;object-fit:cover;object-position:50% 70%;filter:saturate(1.08) contrast(1.05)}
+/* HERO */
+.hero{
+  position:relative;
+  min-height:min(92vh,900px);
+  display:grid;
+  place-items:end center;
+  overflow:hidden; /* or overflow: clip; if you prefer */
+}
+
+.hero__media{
+  position:absolute; inset:0;
+  z-index:-1; overflow:hidden;
+}
+
+.hero__video{
+  width:100%; height:100%;
+  object-fit:cover; object-position:50% 70%;
+  filter:saturate(1.08) contrast(1.05);
+}
 
 .hero__overlay{
   position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(6,11,48,.60),rgba(6,11,48,.10));
-  transition: background 320ms ease; /* enables smooth darken */
+  background:linear-gradient(to top, rgba(6,11,48,.60), rgba(6,11,48,.10));
+  transition: background 320ms ease;
 }
+
+img, video { max-width:100%; height:auto; display:block; }
+
+
 
 
 /* Stronger dark overlay when text appears */
