@@ -231,6 +231,28 @@ body.nav-open {
 
 }
 
+/* 🔹 Force white text on orange scroll state for high contrast */
+@media (min-width:900px){
+  .header.is-scrolled .nav .nav__list a {
+    background: rgba(255,165,0,.90);
+    color: var(--paper) !important;   /* keep text white */
+    border: 1px solid rgba(0,0,0,.08);
+    transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+
+  /* Optional: make hover slightly darker for contrast */
+  .header.is-scrolled .nav .nav__list a:hover {
+    background: rgba(255,165,0,1);
+    color: var(--paper);
+  }
+
+  /* Focus ring contrast for white text */
+  .header.is-scrolled .nav .nav__list a:focus-visible {
+    outline: 3px solid var(--highlight);
+    box-shadow: 0 0 0 4px rgba(0,116,228,.4);
+  }
+}
+
 
 /* =========================================================
    DESKTOP NAV — exact 24px pre-scroll, equal widths on scroll
