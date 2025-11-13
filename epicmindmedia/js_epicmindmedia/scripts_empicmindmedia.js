@@ -186,3 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
   video.addEventListener('error', () => reveal(), { once: true });
 });
 
+//ABOUT SECTION
+// Reveal image when About enters viewport
+(() => {
+  const el = document.querySelector('.about__media');
+  if (!el || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(([e],o)=>{ if(e.isIntersecting){ el.classList.add('in'); o.disconnect(); }},{rootMargin:'-10% 0px'}).observe(el);
+})();
