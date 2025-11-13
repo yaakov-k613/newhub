@@ -15,6 +15,10 @@
   --shadow:0 10px 30px rgba(0,0,0,.18);
   --max:1100px;            /* container width */
   --speed:180ms;           /* animation speed */
+    /* aliases */
+  --color-bg-primary: var(--ink);
+  --color-text-primary: var(--paper);
+  --color-focus: var(--highlight);
 }
 
 /* ---------- Reset & Base ---------- */
@@ -25,6 +29,27 @@ body{
   background:var(--ink); color:var(--paper);
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
   line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+
+html { 
+  -webkit-text-size-adjust: 100%;  /* Stops Safari from resizing text */
+  text-size-adjust: 100%;          /* Cross-browser equivalent */
+}
+input, select, textarea { 
+  font: inherit;                   /* Forces form text to match site font */
+}
+
+
+
+/* =========================================================
+   ACCESSIBILITY: REDUCE MOTION
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---------- Accessibility ---------- */
@@ -39,6 +64,14 @@ body{
 .section{padding:clamp(2.5rem,6vw,5rem) 0}
 .section--alt{background:#0a123e}
 .section--highlight{background:linear-gradient(160deg,#0a123e,#060b30)}
+
+.section[id]{ scroll-margin-top: clamp(64px, 12vh, 96px); }
+
+.anchor-target{ scroll-margin-top: clamp(64px, 12vh, 96px); }
+
+
+
+
 
 /* =========================================================
    HEADER — Fully Transparent
@@ -64,31 +97,76 @@ body{
 
 /* ---------- Navigation (mobile core) ---------- */
 .nav-toggle{
-  display:inline-grid;place-items:center;width:42px;height:42px;padding:8px;border:0;background:transparent;cursor:pointer;border-radius:12px;
+  display:inline-grid;
+  place-items:center;
+  width:44px; /* increased to meet accessibility tap target */
+  height:44px;
+  padding:8px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  border-radius:12px;
 }
+
+.nav-toggle:focus-visible {
+  outline:3px solid var(--highlight);
+  outline-offset:3px;
+  box-shadow:0 0 0 4px rgba(0,116,228,.25);
+  background:rgba(0,116,228,.08);
+
+}
+
+
 .nav-toggle .bar{width:100%;height:3px;background:var(--paper);border-radius:2px;margin-top:5px}
 .nav{
   position:fixed;inset:0 0 0 auto;width:min(80vw,340px);background:#0a123e;
-  transform:translateX(100%);transition:transform var(--speed) ease;padding:6rem 1rem 1rem;box-shadow:var(--shadow);
+  transform:translateX(100%);transition:transform var(--speed) ease;
+  padding-block-start: calc(6rem + env(safe-area-inset-top));
+  padding-block-end: 1rem;
+  padding-inline: 1rem;
+  padding-inline-start: max(1rem, env(safe-area-inset-left));
+  box-shadow:var(--shadow);
 }
+
+/* Improve touch scrolling in the off-canvas panel */
+.nav{ overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+
 .nav.open{transform:translateX(0)}
 .nav__list{list-style:none;display:grid;gap:1rem}
 .nav__list a{
   color:var(--paper);padding:.6rem .75rem;border-radius:10px;
   transition:color var(--speed),background var(--speed),transform var(--speed);
 }
-.nav__list a:hover{color:var(--accent);transform:translateX(2px)}
-.nav__cta .btn{margin-top:.25rem}
 
-/* ---------- Scrolled: give links orange chips ---------- */
-.header.is-scrolled .nav .nav__list a{
-  background:rgba(255,165,0,.90); color:var(--ink);
-  border:1px solid rgba(0,0,0,.08);
-  transition:background .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease;
+/* Lock body scroll when menu is open (toggle body.nav-open in JS) */
+body.nav-open { overflow: hidden; }
+
+@media (hover: hover) and (pointer: fine) {
+  .nav__list a:hover { color: var(--accent); transform: translateX(2px); }
 }
 
+.nav__cta .btn{margin-top:.25rem}
+
+@media (min-width:900px){
+  /* Scrolled: give links orange chips (desktop only) */
+  .header.is-scrolled .nav .nav__list a {
+    background: rgba(255,165,0,.90);
+    color: var(--ink);
+    border: 1px solid rgba(0,0,0,.08);
+    transition: background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+
+  .header .nav__cta .btn.btn--accent:active {
+  background: var(--accent);
+  color: var(--ink);
+  filter: brightness(0.95);
+  text-decoration: none;
+}
+}
+
+
 /* =========================================================
-   DESKTOP NAV — exact 12px pre-scroll, equal widths on scroll
+   DESKTOP NAV — exact 24px pre-scroll, equal widths on scroll
 ========================================================= */
 @media (min-width:900px){
   :root{ --navItemW: clamp(8rem, 9vw, 10rem) }  /* target chip width after scroll */
@@ -137,17 +215,51 @@ body{
 /* Hover/Focus/Active: keep contrast-safe */
 .header .nav__cta .btn.btn--accent:hover,
 .header .nav__cta .btn.btn--accent:focus-visible,
-.header .nav__cta .btn.btn--accent:active {
-  background: var(--accent) !important;
-  color: var(--ink) !important;
-  filter: brightness(0.95);
-  text-decoration: none;
+
+
+/* CTA keyboard focus ring */
+.header .nav__cta .btn.btn--accent:focus-visible {
+  outline: 3px solid var(--highlight);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0,116,228,.2);
 }
 
-/* Keep visited color consistent */
-.header .nav__cta .btn.btn--accent:visited { color: var(--paper); }
-.header.is-scrolled .nav__cta .btn.btn--accent:visited { color: var(--ink); }
 
+/* Keep CTA visited state consistent */
+.header .nav__cta .btn.btn--accent:visited { color: var(--paper); }
+@media (min-width:900px){
+  .header.is-scrolled .nav__cta .btn.btn--accent:visited { color: var(--ink); }
+}
+
+/* Pre-scroll focus ring (links before header gets .is-scrolled) */
+.nav .nav__list a:focus-visible{
+  outline:3px solid var(--highlight);
+  box-shadow:0 0 0 4px rgba(0,116,228,.25);
+  border-radius:10px;
+}
+
+/* Stronger focus ring on orange chips (desktop) */
+@media (min-width:900px){
+  .header.is-scrolled .nav .nav__list a:focus-visible {
+    outline: 3px solid var(--ink);
+    box-shadow: 0 0 0 4px rgba(255,165,0,.5);
+    border-radius: 10px;
+  }
+}
+
+/* Mobile: comfier tap targets */
+.nav__list a { padding: .8rem .9rem; }  /* was .6/.75 */
+
+/* Mobile tap polish */
+.nav__list a:focus-visible {
+  outline:3px solid var(--highlight);
+  outline-offset:2px;
+  border-radius:10px;
+  box-shadow:0 0 0 3px rgba(0,116,228,.25);
+}
+
+
+a, button { -webkit-tap-highlight-color: transparent; }
 
 .btn--light{background:#eaf0ff;color:#0b1030}
 .btn--light:hover{background:#f4f7ff}
@@ -178,6 +290,12 @@ a:hover{color:var(--accent)}
 .card:hover{transform:translateY(-3px);border-color:var(--highlight)}
 .card h3{margin:0 0 .25rem}
 
+@media (hover:hover) and (pointer:fine){
+  .card:hover{ transform:translateY(-3px) }
+  .tile:hover{ transform:translateY(-3px) }
+}
+
+
 /* =========================================================
    PORTFOLIO
 ========================================================= */
@@ -200,10 +318,13 @@ a:hover{color:var(--accent)}
 ========================================================= */
 .form{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
 .form label{display:grid;gap:.35rem}
+
 .form input,.form select,.form textarea{
   padding:.8rem;border-radius:12px;border:1px solid rgba(255,255,255,.12);
   background:#0b1038;color:var(--paper);
+  font-size:16px; /* prevents iOS zoom on focus */
 }
+
 .form input:focus,.form select:focus,.form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,165,0,.18)}
 .form textarea{min-height:140px;resize:vertical}
 #quoteStatus{margin-top:.25rem;font-weight:700;color:var(--highlight)}
