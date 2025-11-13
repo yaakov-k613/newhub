@@ -1,6 +1,6 @@
 /* =========================================================
    Epic Mind Media v1 — Full Responsive Stylesheet
-   Transparent header + compact pre-scroll nav + equal widths on scroll
+   Transparent header + compact nav + equal-width links on scroll
 ========================================================= */
 
 /* ---------- Design Tokens ---------- */
@@ -65,8 +65,14 @@ input, select, textarea { font: inherit; }
 }
 
 /* ---------- Accessibility ---------- */
-.skip-link{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.skip-link:focus{left:1rem;top:1rem;background:var(--paper);color:var(--ink);padding:.5rem .75rem;border-radius:10px;z-index:9999}
+.skip-link{
+  position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden
+}
+.skip-link:focus{
+  left:1rem;top:1rem;
+  background:var(--paper);color:var(--ink);
+  padding:.5rem .75rem;border-radius:10px;z-index:9999
+}
 :where(a,button,[role="button"],input,select,textarea):focus-visible{
   outline:3px solid var(--highlight);
   outline-offset:2px;
@@ -87,7 +93,9 @@ input, select, textarea { font: inherit; }
 .section{padding:clamp(2.5rem,6vw,5rem) 0}
 .section--alt{background:#0a123e}
 .section--highlight{background:linear-gradient(160deg,#0a123e,#060b30)}
-.section[id], .anchor-target{ scroll-margin-top: clamp(64px, 12vh, 96px); }
+.section[id], .anchor-target{
+  scroll-margin-top: clamp(64px, 12vh, 96px);
+}
 
 /* =========================================================
    HEADER — Fully Transparent
@@ -105,7 +113,9 @@ input, select, textarea { font: inherit; }
 }
 
 /* Transparent both states per spec (you can add blur if desired) */
-.header.is-scrolled{ background: rgba(6,11,48,0); }
+.header.is-scrolled{
+  background: rgba(6,11,48,0);
+}
 
 /* ---------- Logo ---------- */
 .logo img{
@@ -132,7 +142,10 @@ input, select, textarea { font: inherit; }
   box-shadow:0 0 0 4px rgba(0,116,228,.25);
   background:rgba(0,116,228,.08);
 }
-.nav-toggle .bar{width:100%;height:3px;background:var(--paper);border-radius:2px;margin-top:5px}
+.nav-toggle .bar{
+  width:100%;height:3px;background:var(--paper);
+  border-radius:2px;margin-top:5px
+}
 
 /* Off-canvas drawer */
 .nav{
@@ -144,11 +157,16 @@ input, select, textarea { font: inherit; }
   overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
   box-shadow:none;
 }
-.nav.open{ right:0; box-shadow:var(--shadow); }
+.nav.open{
+  right:0; box-shadow:var(--shadow);
+}
 
 body.nav-open{ overflow:hidden; }
 
-.nav__list{ list-style:none; display:grid; gap:1rem; }
+.nav__list{
+  list-style:none;
+  display:grid; gap:1rem;
+}
 .nav__list a{
   color:var(--paper);
   padding:.6rem .75rem;
@@ -159,27 +177,44 @@ body.nav-open{ overflow:hidden; }
 /* ---------- Desktop Nav ---------- */
 @media (min-width:900px){
   .nav-toggle{ display:none; }
-  .nav{ position:static; right:auto; width:auto; background:transparent; padding:0; box-shadow:none; }
+
+  .nav{
+    position:static;
+    right:auto; left:auto;
+    width:auto;
+    background:transparent;
+    padding:0;
+    box-shadow:none;
+    margin-left:auto;          /* pushes nav to the right in header row */
+  }
+
+  .header__row{
+    justify-content:flex-start;  /* logo left, nav pushed right via margin-left:auto */
+  }
+
   .nav__list{
     display:flex; align-items:center; gap:24px; transition:gap .25s ease;
   }
+
   .nav__list > li:not(.nav__cta) > a{
     display:inline-block; inline-size:auto;
     text-align:center; white-space:nowrap;
     padding-block:.6rem; padding-inline:0; border-radius:10px;
   }
-  /* Equal-width chips on scroll (links + CTA) */
-  :root{ --navItemW: clamp(7.5rem, 8.5vw, 9rem); }
+
+  /* Equal-width chips for NON-CTA links only */
+  :root{ --navItemW: clamp(5.5rem, 6.5vw, 7rem); }
+
   .header.is-scrolled .nav__list{ gap:16px; }
-  .header.is-scrolled .nav__list > li > a{
+
+  .header.is-scrolled .nav__list > li:not(.nav__cta) > a{
     inline-size: var(--navItemW);
     display:inline-flex; align-items:center; justify-content:center;
     white-space:nowrap; padding-block:.5rem; padding-inline:0; text-align:center;
   }
-  .header.is-scrolled .nav__list > li.nav__cta > a.btn{ inline-size: var(--navItemW); }
 }
 
-/* ---------- Orange chips on scroll (links only) ---------- */
+/* ---------- Orange chips on scroll (links) ---------- */
 @media (min-width:900px){
   .header.is-scrolled .nav .nav__list a{
     background: rgba(255,165,0,.90);
@@ -204,22 +239,22 @@ body.nav-open{ overflow:hidden; }
   font-weight:700; letter-spacing:.2px;
   transition:transform var(--speed),background var(--speed),box-shadow var(--speed), color var(--speed);
 }
-.btn--accent{ background:var(--accent); color:var(--ink); }
-
-/* Default CTA text color on transparent header */
-.header .nav__cta .btn.btn--accent { color: var(--paper); }
-
-/* On scroll, original theme would flip to dark text; we’ll override below for CTA spec */
+.btn--accent{
+  background:var(--accent);
+  color:var(--ink);
+}
 
 /* ---------- CTA: Orange bg + Blue bold text, hover → White ---------- */
 @media (min-width:900px){
-  /* Pre-scroll */
+  /* Base CTA (both scroll states) */
   .header .nav__cta .btn.btn--accent{
     background: var(--accent);
     color: var(--ink) !important;  /* blue text */
     border: 2px solid var(--accent);
+    font-weight:700;
     transition: color .2s ease, background .2s ease, filter .2s ease, border-color .2s ease;
   }
+
   .header .nav__cta .btn.btn--accent:hover,
   .header .nav__cta .btn.btn--accent:focus-visible{
     color: var(--paper) !important;      /* white on hover/focus */
@@ -228,15 +263,21 @@ body.nav-open{ overflow:hidden; }
     filter: brightness(1.03);
   }
 
-  /* Scrolled */
   .header.is-scrolled .nav__cta .btn.btn--accent{
     background: var(--accent);
     color: var(--ink) !important;
     border: 2px solid var(--accent);
   }
+
   .header.is-scrolled .nav__cta .btn.btn--accent:hover,
   .header.is-scrolled .nav__cta .btn.btn--accent:focus-visible{
     color: var(--paper) !important;
+  }
+
+  /* ✅ Keep "Get a Quote" natural width (no equal-width chip) */
+  .header.is-scrolled .nav__list > li.nav__cta > a.btn{
+    inline-size:auto !important;
+    padding-inline:1.1rem;
   }
 }
 
@@ -307,7 +348,9 @@ img, video { max-width:100%; height:auto; display:block; }
 .hero__content{text-align:center;padding:12vh 1rem 7vh}
 .hero__content h1{margin:0 0 .5rem;font-size:clamp(2rem,6vw,4rem)}
 .hero__content p{max-width:62ch;margin:0 auto 1rem;color:#dfe7ff}
-.hero__content.is-hidden{ opacity:0; transform:translateY(8px); pointer-events:none; }
+.hero__content.is-hidden{
+  opacity:0; transform:translateY(8px); pointer-events:none;
+}
 .hero__content.is-visible{
   opacity:1; transform:none; pointer-events:auto;
   transition: opacity 320ms ease, transform 320ms ease;
@@ -375,12 +418,25 @@ img, video { max-width:100%; height:auto; display:block; }
 /* =========================================================
    CONTACT & FOOTER
 ========================================================= */
-#contact p a{border-bottom:2px solid var(--earth);transition:border-color var(--speed),color var(--speed)}
-#contact p a:hover{color:var(--accent);border-color:var(--accent)}
-.footer{background:#0a123e;border-top:1px solid rgba(255,255,255,.08);padding:2rem 0}
-.footer__row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.back-to-top{opacity:.85;transition:opacity var(--speed),transform var(--speed)}
-.back-to-top:hover{opacity:1;transform:translateY(-2px)}
+#contact p a{
+  border-bottom:2px solid var(--earth);
+  transition:border-color var(--speed),color var(--speed)
+}
+#contact p a:hover{
+  color:var(--accent);border-color:var(--accent)
+}
+.footer{
+  background:#0a123e;border-top:1px solid rgba(255,255,255,.08);padding:2rem 0
+}
+.footer__row{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem
+}
+.back-to-top{
+  opacity:.85;transition:opacity var(--speed),transform var(--speed)
+}
+.back-to-top:hover{
+  opacity:1;transform:translateY(-2px)
+}
 
 /* =========================================================
    PRINT
