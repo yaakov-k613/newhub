@@ -157,10 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const TIMEOUT_MS = 10000;     // absolute safety reveal
   
   const showOverlay = () => {
-    overlay.classList.remove('is-hidden');
-    overlay.classList.add('is-visible');
-    overlay.setAttribute('aria-hidden', 'false');
-  };
+  const hero = document.querySelector('.hero');          // ← add
+  if (hero) hero.classList.add('hero--dim');             // ← add
+  overlay.classList.remove('is-hidden');
+  overlay.classList.add('is-visible');
+  overlay.setAttribute('aria-hidden', 'false');
+};
+
 
   const reveal = () => setTimeout(showOverlay, DELAY_MS);
 
